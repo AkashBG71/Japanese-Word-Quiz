@@ -1,0 +1,273 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japanese Word Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            background-color: #121212; /* Dark mode by default */
+            color: white; /* Dark mode text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        body.night-mode {
+            background-color: #121212;
+            color: white;
+        }
+        body:not(.night-mode) {
+            background-color: #f0f0f0; /* Light mode background */
+            color: black; /* Light mode text color */
+        }
+        #sidebar, #right-sidebar {
+            width: 290px;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            height: 100%;
+            overflow-y: auto;
+            transition: transform 0.3s;
+            z-index: 1000;
+        }
+        #sidebar {
+            left: -250px;
+            background: #222; /* Default sidebar color for dark mode */
+        }
+        #right-sidebar {
+            right: -260px;
+            background: #222; /* Default sidebar color for dark mode */
+        }
+        body:not(.night-mode) #sidebar, body:not(.night-mode) #right-sidebar {
+            background: white; /* Sidebar color for light mode */
+        }
+        body:not(.night-mode) #sidebar li, body:not(.night-mode) #right-sidebar li {
+            color: black; /* Text color for light mode */
+        }
+        #sidebar.active { transform: translateX(250px); }
+        #right-sidebar.active { transform: translateX(-250px); }
+        #toggle-sidebar, #toggle-right-sidebar {
+            position: fixed;
+            top: 20px;
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        #toggle-sidebar { left: 10px; }
+        #toggle-right-sidebar { right: 10px; }
+        #night-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        #quiz-container {
+            margin-top: 60px;
+            max-width: 500px;
+            padding: 50px;
+            text-align: center;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            animation: bloom 0.5s forwards;
+        }
+        @keyframes bloom {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button { background: #444; color: white; cursor: pointer; }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+        }
+        body.night-mode footer {
+            color: white;
+        }
+        body:not(.night-mode) footer {
+            background-color: black;
+            color: white; /* Footer color for light mode */
+        }
+        ul { list-style-type: none; padding: 0; margin: 0; }
+        li { cursor: pointer; padding: 5px; border-bottom: 1px solid #444; }
+        li:hover { background: #333; }
+        .mistake-item { cursor: pointer; }
+        .mistake-answer { display: none; }
+    </style>
+</head>
+<body>
+    <button id="toggle-sidebar">☰ Menu</button>
+    <button id="toggle-right-sidebar">☰ Mistakes</button>
+    <button id="night-mode-toggle">🌙 Night Mode</button>
+    <div id="sidebar">
+        <h3>Quizzes</h3>
+        <ul id="quiz-list"></ul>
+    </div>
+    <div id="right-sidebar">
+        <h3>Mistakes</h3>
+        <ul id="mistake-list"></ul>
+    </div>
+    <div id="quiz-container">
+        <h2>Japanese Word Quiz</h2>
+        <h3 id="question">Loading...</h3>
+        <input type="text" id="answer" placeholder="Enter meaning">
+        <button onclick="checkAnswer()">Submit</button>
+        <button id="show-answer" onclick="showAnswer()" style="display: none;">Show Answer</button>
+        <button id="next-quiz" onclick="newQuestion()" style="display: none;">Next Quiz</button>
+        <p id="result"></p>
+    </div>
+    <footer>Created by Akash Kumar</footer>
+
+<script>
+// Define quizzes for 33 quizzes with multiple possible correct answers
+const quizzes = {
+    "Quiz 1": {
+        "規制 (きせい / kisei)": ["Regulation", "restriction"],
+        "個人主義 (こじんしゅぎ / kojin shugi)": ["Individualism"],
+        "家父長制度 (かふちょうせいど / kafuchō seido)": ["Patriarchal system"],
+        "権力 (けんりょく / kenryoku)": ["Power", "authority"],
+        "モラル (moraru)": ["Morals", "ethics"],
+        "支配 (しはい / shihai)": ["Control", "domination"],
+        "美名 (びめい / bimei)": ["Good reputation", "fine name"],
+        "真裏 (まうら / maura)": ["The exact opposite", "the reverse side"],
+        "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
+        "情報 (じょうほう / jōhō)": ["Information"]
+    },
+
+    "Quiz 2": {
+        "規制 (きせい / kisei)": ["Regulation", "restriction"],
+        "個人主義 (こじんしゅぎ / kojin shugi)": ["Individualism"],
+        "家父長制度 (かふちょうせいど / kafuchō seido)": ["Patriarchal system"],
+        "権力 (けんりょく / kenryoku)": ["Power", "authority"],
+        "モラル (moraru)": ["Morals", "ethics"],
+        "支配 (しはい / shihai)": ["Control", "domination"],
+        "美名 (びめい / bimei)": ["Good reputation", "fine name"],
+        "真裏 (まうら / maura)": ["The exact opposite", "the reverse side"],
+        "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
+        "情報 (じょうほう / jōhō)": ["Information"]
+    },
+    // More quizzes...
+};
+
+let mistakes = JSON.parse(localStorage.getItem('mistakes')) || [];
+let currentWord = "", currentQuiz = "Quiz 1", wrongAttempts = 0;
+
+function loadQuizzes() {
+    let quizList = document.getElementById("quiz-list");
+    quizList.innerHTML = "";
+    let counter = 0;
+    let miscCounter = 1;
+    for (let quiz in quizzes) {
+        counter++;
+        let li = document.createElement("li");
+        li.textContent = quiz;
+        li.onclick = () => { currentQuiz = quiz; newQuestion(); };
+        quizList.appendChild(li);
+
+        // Add Miscellaneous Quiz after every 3 quizzes
+        if (counter % 3 === 0) {
+            let miscQuiz = document.createElement("li");
+            miscQuiz.textContent = `Miscellaneous Quiz ${miscCounter}`;
+            quizList.appendChild(miscQuiz);
+            miscCounter++;
+        }
+    }
+}
+
+function newQuestion() {
+    let words = quizzes[currentQuiz];
+    let keys = Object.keys(words);
+    currentWord = keys[Math.floor(Math.random() * keys.length)];
+    document.getElementById("question").innerText = `What is the meaning of: ${currentWord}`;
+    document.getElementById("answer").value = "";
+    document.getElementById("show-answer").style.display = "none";
+    document.getElementById("next-quiz").style.display = "none";
+    document.getElementById("result").innerText = "";
+    wrongAttempts = 0;
+}
+
+function checkAnswer() {
+    let userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+    let correctAnswers = quizzes[currentQuiz][currentWord].map(answer => answer.toLowerCase());
+
+    if (correctAnswers.includes(userAnswer)) {
+        document.getElementById("result").innerText = "Correct!";
+        setTimeout(newQuestion, 1000);
+    } else {
+        wrongAttempts++;
+        document.getElementById("result").innerText = "Incorrect! Try again.";
+        if (!mistakes.includes(currentWord)) {
+            mistakes.unshift(currentWord); // Add to top
+            updateMistakes();
+            localStorage.setItem('mistakes', JSON.stringify(mistakes));
+        }
+        // Always show answer option after any incorrect attempt
+        document.getElementById("show-answer").style.display = "inline-block";
+    }
+}
+
+function showAnswer() {
+    let correctAnswer = quizzes[currentQuiz][currentWord].join(", ");
+    document.getElementById("result").innerText = `Correct Answer: ${correctAnswer}`;
+    document.getElementById("next-quiz").style.display = "inline-block";
+}
+
+function updateMistakes() {
+    let mistakeList = document.getElementById("mistake-list");
+    mistakeList.innerHTML = "";
+    mistakes.slice(0, 15).forEach(word => {
+        let li = document.createElement("li");
+        li.classList.add("mistake-item");
+        li.textContent = word;
+        let answer = document.createElement("span");
+        answer.classList.add("mistake-answer");
+        answer.textContent = ` - ${quizzes[currentQuiz][word].join(", ")}`;
+        li.appendChild(answer);
+        li.onclick = () => answer.style.display = answer.style.display === "none" ? "inline" : "none";
+        mistakeList.appendChild(li);
+    });
+}
+
+// Add event listeners for toggling sidebars
+document.getElementById("toggle-sidebar").addEventListener("click", function() {
+    document.getElementById("sidebar").classList.toggle("active");
+    if (document.getElementById("right-sidebar").classList.contains("active")) {
+        document.getElementById("right-sidebar").classList.remove("active");
+    }
+});
+
+document.getElementById("toggle-right-sidebar").addEventListener("click", function() {
+    document.getElementById("right-sidebar").classList.toggle("active");
+    if (document.getElementById("sidebar").classList.contains("active")) {
+        document.getElementById("sidebar").classList.remove("active");
+    }
+});
+
+// Toggle night mode
+document.getElementById("night-mode-toggle").addEventListener("click", function() {
+    document.body.classList.toggle("night-mode");
+});
+
+loadQuizzes();
+newQuestion();
+</script>
+
+</body>
+</html>
