@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,15 +30,15 @@
             top: 0;
             height: 100%;
             overflow-y: auto;
-            transition: transform 0.3s;
             z-index: 1000;
+            transition: transform 0.3s ease-in-out; /* Smooth transition */
         }
         #sidebar {
-            left: -250px;
+            left: -290px; /* Initially hidden off-screen */
             background: #222; /* Default sidebar color for dark mode */
         }
         #right-sidebar {
-            right: -260px;
+            right: -290px; /* Initially hidden off-screen */
             background: #222; /* Default sidebar color for dark mode */
         }
         body:not(.night-mode) #sidebar, body:not(.night-mode) #right-sidebar {
@@ -47,8 +47,12 @@
         body:not(.night-mode) #sidebar li, body:not(.night-mode) #right-sidebar li {
             color: black; /* Text color for light mode */
         }
-        #sidebar.active { transform: translateX(250px); }
-        #right-sidebar.active { transform: translateX(-250px); }
+        #sidebar.active {
+            transform: translateX(290px); /* Move sidebar into view */
+        }
+        #right-sidebar.active {
+            transform: translateX(-290px); /* Move right sidebar into view */
+        }
         #toggle-sidebar, #toggle-right-sidebar {
             position: fixed;
             top: 20px;
@@ -150,7 +154,6 @@ const quizzes = {
         "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
         "情報 (じょうほう / jōhō)": ["Information"]
     },
-
     "Quiz 2": {
         "規制 (きせい / kisei)": ["Regulation", "restriction"],
         "個人主義 (こじんしゅぎ / kojin shugi)": ["Individualism"],
@@ -162,20 +165,7 @@ const quizzes = {
         "真裏 (まうら / maura)": ["The exact opposite", "the reverse side"],
         "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
         "情報 (じょうほう / jōhō)": ["Information"]
-    },
-        "Quiz 3": {
-        "規制 (きせい / kisei)": ["Regulation", "restriction"],
-        "個人主義 (こじんしゅぎ / kojin shugi)": ["Individualism"],
-        "家父長制度 (かふちょうせいど / kafuchō seido)": ["Patriarchal system"],
-        "権力 (けんりょく / kenryoku)": ["Power", "authority"],
-        "モラル (moraru)": ["Morals", "ethics"],
-        "支配 (しはい / shihai)": ["Control", "domination"],
-        "美名 (びめい / bimei)": ["Good reputation", "fine name"],
-        "真裏 (まうら / maura)": ["The exact opposite", "the reverse side"],
-        "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
-        "情報 (じょうほう / jōhō)": ["Information"]
-    },
-    // More quizzes...
+    }
 };
 
 let mistakes = JSON.parse(localStorage.getItem('mistakes')) || [];
@@ -184,22 +174,11 @@ let currentWord = "", currentQuiz = "Quiz 1", wrongAttempts = 0;
 function loadQuizzes() {
     let quizList = document.getElementById("quiz-list");
     quizList.innerHTML = "";
-    let counter = 0;
-    let miscCounter = 1;
     for (let quiz in quizzes) {
-        counter++;
         let li = document.createElement("li");
         li.textContent = quiz;
         li.onclick = () => { currentQuiz = quiz; newQuestion(); };
         quizList.appendChild(li);
-
-        // Add Miscellaneous Quiz after every 3 quizzes
-        if (counter % 3 === 0) {
-            let miscQuiz = document.createElement("li");
-            miscQuiz.textContent = `Miscellaneous Quiz ${miscCounter}`;
-            quizList.appendChild(miscQuiz);
-            miscCounter++;
-        }
     }
 }
 
@@ -225,12 +204,14 @@ function checkAnswer() {
     } else {
         wrongAttempts++;
         document.getElementById("result").innerText = "Incorrect! Try again.";
-        if (!mistakes.includes(currentWord)) {
-            mistakes.unshift(currentWord); // Add to top
+        
+        // Add to mistakes if not already there
+        if (!mistakes.some(item => item.word === currentWord)) {
+            mistakes.push({ word: currentWord, correctAnswer: quizzes[currentQuiz][currentWord].join(", ") });
+            localStorage.setItem('mistakes', JSON.stringify(mistakes)); // Save to localStorage
             updateMistakes();
-            localStorage.setItem('mistakes', JSON.stringify(mistakes));
         }
-        // Always show answer option after any incorrect attempt
+        
         document.getElementById("show-answer").style.display = "inline-block";
     }
 }
@@ -243,21 +224,23 @@ function showAnswer() {
 
 function updateMistakes() {
     let mistakeList = document.getElementById("mistake-list");
-    mistakeList.innerHTML = "";
-    mistakes.slice(0, 15).forEach(word => {
+    mistakeList.innerHTML = ""; // Clear previous mistakes
+
+    mistakes.forEach(mistake => {
         let li = document.createElement("li");
         li.classList.add("mistake-item");
-        li.textContent = word;
+        li.textContent = mistake.word;
         let answer = document.createElement("span");
         answer.classList.add("mistake-answer");
-        answer.textContent = ` - ${quizzes[currentQuiz][word].join(", ")}`;
+        answer.textContent = ` - ${mistake.correctAnswer}`;
         li.appendChild(answer);
+
         li.onclick = () => answer.style.display = answer.style.display === "none" ? "inline" : "none";
         mistakeList.appendChild(li);
     });
 }
 
-// Add event listeners for toggling sidebars
+// Sidebar toggle
 document.getElementById("toggle-sidebar").addEventListener("click", function() {
     document.getElementById("sidebar").classList.toggle("active");
     if (document.getElementById("right-sidebar").classList.contains("active")) {
@@ -279,6 +262,7 @@ document.getElementById("night-mode-toggle").addEventListener("click", function(
 
 loadQuizzes();
 newQuestion();
+updateMistakes();
 </script>
 
 </body>
