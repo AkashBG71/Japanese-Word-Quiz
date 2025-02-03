@@ -23,7 +23,18 @@
             background-color: #f0f0f0; /* Light mode background */
             color: black; /* Light mode text color */
         }
-        #sidebar, #right-sidebar {
+        #sidebar {
+            width: 290px;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            height: 100%;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out; /* Smooth transition */
+        }
+
+        #right-sidebar {
             width: 290px;
             padding: 15px;
             position: fixed;
@@ -34,11 +45,11 @@
             transition: transform 0.3s ease-in-out; /* Smooth transition */
         }
         #sidebar {
-            left: -290px; /* Initially hidden off-screen */
+            left: -320px; /* Initially hidden off-screen */
             background: #222; /* Default sidebar color for dark mode */
         }
         #right-sidebar {
-            right: -290px; /* Initially hidden off-screen */
+            right: -320px; /* Initially hidden off-screen */
             background: #222; /* Default sidebar color for dark mode */
         }
         body:not(.night-mode) #sidebar, body:not(.night-mode) #right-sidebar {
@@ -125,7 +136,7 @@
         <ul id="quiz-list"></ul>
     </div>
     <div id="right-sidebar">
-        <h3>Mistakes</h3>
+        <h3><br><br>Mistakes</br></br></h3>
         <ul id="mistake-list"></ul>
     </div>
     <div id="quiz-container">
@@ -142,7 +153,7 @@
 <script>
 // Define quizzes for 33 quizzes with multiple possible correct answers
 const quizzes = {
-    "Quiz 1": {
+    "Quiz Ex": {
         "規制 (きせい / kisei)": ["Regulation", "restriction"],
         "個人主義 (こじんしゅぎ / kojin shugi)": ["Individualism"],
         "家父長制度 (かふちょうせいど / kafuchō seido)": ["Patriarchal system"],
@@ -154,18 +165,71 @@ const quizzes = {
         "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
         "情報 (じょうほう / jōhō)": ["Information"]
     },
-    "Quiz 2": {
-        "規制 (きせい / kisei)": ["Regulation", "restriction"],
-        "個人主義 (こじんしゅぎ / kojin shugi)": ["Individualism"],
-        "家父長制度 (かふちょうせいど / kafuchō seido)": ["Patriarchal system"],
-        "権力 (けんりょく / kenryoku)": ["Power", "authority"],
-        "モラル (moraru)": ["Morals", "ethics"],
-        "支配 (しはい / shihai)": ["Control", "domination"],
-        "美名 (びめい / bimei)": ["Good reputation", "fine name"],
-        "真裏 (まうら / maura)": ["The exact opposite", "the reverse side"],
-        "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
-        "情報 (じょうほう / jōhō)": ["Information"]
-    }
+"Quiz 1": {
+    "尊ぶ (とうとぶ / to-tobu)": ["To respect", "to honor"],
+    "体制的 (たいせいてき / taiseiteki)": ["Related to the system or regime"],
+    "芸術家 (げいじゅつか / geijutsuka)": ["Artist", "someone who creates art"],
+    "バレリーナ (barerīna)": ["Ballerina", "a female ballet dancer"],
+    "配給 (はいきゅう / haikyū)": ["To distribute", "to supply", "often referring to government-controlled goods like food"],
+    "優遇する (ゆうぐうする / yūgū suru)": ["To favor", "to give preferential treatment"],
+    "職業 (しょくぎょう / shokugyō)": ["Profession", "occupation"],
+    "等 (など / nado)": ["Etcetera", "and so on", "or similar"],
+    "義務教育 (ぎむきょういく / gimukyōiku)": ["Compulsory education", "mandatory schooling"],
+    "教科 (きょうか / kyōka)": ["Subject", "curriculum"],
+    "時間 (じかん / jikan)": ["Time", "referring to a period or class time"],
+    "減らす (へらす / herasu)": ["To reduce", "to decrease"],
+    "国策 (こくさく / kokusaku)": ["National policy"],
+    "科学的 (かがくてき / kagakuteki)": ["Scientific"],
+    "発見 (はっけん / hakken)": ["Discovery"],
+    "迅速な (じんそくな / jinsokuna)": ["Swift", "prompt"],
+    "役に立たない (やくにたたない / yaku ni tatanai)": ["Useless", "not helpful"],
+    "感性 (かんせい / kansei)": ["Sensibility", "sensitivity", "the ability to perceive beauty"],
+    "執拗な (しつような / shitsuyōna)": ["Persistent", "tenacious"],
+    "努力する (どりょくする / doryoku suru)": ["To make an effort", "to strive"],
+    "両輪 (りょうりん / ryōrin)": ["Two wheels", "used metaphorically for two complementary components"],
+    "開く (ひらく / hiraku)": ["To open", "to develop", "to create"],
+    "創造する (そうぞうする / sōzō suru)": ["To create", "to bring into existence"]
+},
+
+"Quiz 2": {
+    "大同小異 (だいどうしょうい / daidō shōi)": ["Almost the same"],
+    "往き来 (いきき / ikiki)": ["Going back and forth"],
+    "小異 (しょうい / shōi)": ["Small difference"],
+    "雑誌 (ざっし / zasshi)": ["Magazine"],
+    "求める (もとめる / motomeru)": ["To ask for"],
+    "都市風景 (としふうけい / toshi fūkei)": ["Cityscape"],
+    "多角的 (たかくてき / takakuteki)": ["From many perspectives"],
+    "企画 (きかく / kikaku)": ["Plan", "project"],
+    "相談 (そうだん / sōdan)": ["Consultation"],
+    "迷わず (まよわず / mayowazu)": ["Without hesitation"],
+    "大阪湾岸 (おおさかわんがん / ōsaka wangan)": ["Osaka Bay area"],
+    "工場群 (こうじょうぐん / kōjō gun)": ["Factory group"],
+    "港湾施設 (こうわんしせつ / kōwan shisetsu)": ["Port facilities"],
+    "風景 (ふうけい / fūkei)": ["Landscape"],
+    "編集者 (へんしゅうしゃ / henshūsha)": ["Editor"],
+    "驚く (おどろく / odoroku)": ["To be surprised"],
+    "岸壁 (がんぺき / ganpeki)": ["Wharf"],
+    "一般市民 (いっぱんしみん / ippan shimin)": ["General public"],
+    "当たり前 (あたりまえ / atarimae)": ["As expected"],
+    "事実 (じじつ / jijitsu)": ["Fact"],
+    "港 (みなと / minato)": ["Harbor"],
+    "発着場 (はっちゃくじょう / hacchakujō)": ["Boarding place"],
+    "海岸線 (かいがんせん / kaigansen)": ["Coastline"],
+    "倉庫 (そうこ / sōko)": ["Warehouse"],
+    "埋立地 (うめたてち / umatatechi)": ["Reclaimed land"],
+    "埠頭 (ふとう / futō)": ["Pier"],
+    "私有地 (しゆうち / shiyūchi)": ["Private land"],
+    "管理地 (かんりち / kanrichi)": ["Managed land"],
+    "出入口 (でいりぐち / deiriguchi)": ["Entrance and exit"],
+    "閉じる (とじる / tojiro)": ["To close"],
+    "開く (ひらく / hiraku)": ["To open"],
+    "文藝春秋 (ぶんげいしゅんじゅう / bungei shunjū)": ["Literary magazine"],
+    "驚愕 (きょうがく / kyōgaku)": ["Shock"],
+    "自由 (じゆう / jiyū)": ["Freedom"],
+    "制限 (せいげん / seigen)": ["Limitation"]
+}
+
+
 };
 
 let mistakes = JSON.parse(localStorage.getItem('mistakes')) || [];
