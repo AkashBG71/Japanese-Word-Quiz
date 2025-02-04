@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,20 +10,27 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
-            background-color: #121212; /* Dark mode by default */
-            color: white; /* Dark mode text color */
+            background-color: #121212;
+            /* Dark mode by default */
+            color: white;
+            /* Dark mode text color */
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+
         body.night-mode {
             background-color: #121212;
             color: white;
         }
+
         body:not(.night-mode) {
-            background-color: #f0f0f0; /* Light mode background */
-            color: black; /* Light mode text color */
+            background-color: #b16f6f;
+            /* Light mode background */
+            color: black;
+            /* Light mode text color */
         }
+
         #sidebar {
             width: 290px;
             padding: 15px;
@@ -31,7 +39,8 @@
             height: 100%;
             overflow-y: auto;
             z-index: 1000;
-            transition: transform 0.3s ease-in-out; /* Smooth transition */
+            transition: transform 0.3s ease-in-out;
+            /* Smooth transition */
         }
 
         #right-sidebar {
@@ -42,29 +51,48 @@
             height: 100%;
             overflow-y: auto;
             z-index: 1000;
-            transition: transform 0.3s ease-in-out; /* Smooth transition */
+            transition: transform 0.3s ease-in-out;
+            /* Smooth transition */
         }
+
         #sidebar {
-            left: -320px; /* Initially hidden off-screen */
-            background: #222; /* Default sidebar color for dark mode */
+            left: -320px;
+            /* Initially hidden off-screen */
+            background: #222;
+            /* Default sidebar color for dark mode */
         }
+
         #right-sidebar {
-            right: -320px; /* Initially hidden off-screen */
-            background: #222; /* Default sidebar color for dark mode */
+            right: -320px;
+            /* Initially hidden off-screen */
+            background: #222;
+            /* Default sidebar color for dark mode */
         }
-        body:not(.night-mode) #sidebar, body:not(.night-mode) #right-sidebar {
-            background: white; /* Sidebar color for light mode */
+
+        body:not(.night-mode) #sidebar,
+        body:not(.night-mode) #right-sidebar {
+            background: white;
+            /* Sidebar color for light mode */
         }
-        body:not(.night-mode) #sidebar li, body:not(.night-mode) #right-sidebar li {
-            color: black; /* Text color for light mode */
+
+        body:not(.night-mode) #sidebar li,
+        body:not(.night-mode) #right-sidebar li {
+            color: black;
+            /* Text color for light mode */
         }
+
         #sidebar.active {
-            transform: translateX(290px); /* Move sidebar into view */
+            transform: translateX(290px);
+            /* Move sidebar into view */
         }
+
         #right-sidebar.active {
-            transform: translateX(-290px); /* Move right sidebar into view */
+            transform: translateX(-290px);
+            /* Move right sidebar into view */
         }
-        #toggle-sidebar, #toggle-right-sidebar {
+
+        #toggle-sidebar,
+        #toggle-right-sidebar {
             position: fixed;
             top: 20px;
             background: #444;
@@ -74,8 +102,15 @@
             cursor: pointer;
             z-index: 1100;
         }
-        #toggle-sidebar { left: 10px; }
-        #toggle-right-sidebar { right: 10px; }
+
+        #toggle-sidebar {
+            left: 10px;
+        }
+
+        #toggle-right-sidebar {
+            right: 10px;
+        }
+
         #night-mode-toggle {
             position: fixed;
             bottom: 20px;
@@ -84,8 +119,9 @@
             border: none;
             padding: 10px;
             cursor: pointer;
-            z-index: 1100;
+            z-index: 1000;
         }
+
         #quiz-container {
             margin-top: 60px;
             max-width: 500px;
@@ -97,36 +133,73 @@
             transform: scale(0);
             animation: bloom 0.5s forwards;
         }
+
         @keyframes bloom {
-            from { transform: scale(0); }
-            to { transform: scale(1); }
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
         }
-        input, button {
+
+        input,
+        button {
             padding: 10px;
             margin: 10px;
             border: none;
             border-radius: 5px;
         }
-        button { background: #444; color: white; cursor: pointer; }
+
+        button {
+            background: #444;
+            color: white;
+            cursor: pointer;
+        }
+
         footer {
             margin-top: 20px;
             text-align: center;
             position: relative;
         }
+
         body.night-mode footer {
             color: white;
         }
+
         body:not(.night-mode) footer {
             background-color: black;
-            color: white; /* Footer color for light mode */
+            color: white;
+            /* Footer color for light mode */
         }
-        ul { list-style-type: none; padding: 0; margin: 0; }
-        li { cursor: pointer; padding: 5px; border-bottom: 1px solid #444; }
-        li:hover { background: #333; }
-        .mistake-item { cursor: pointer; }
-        .mistake-answer { display: none; }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            cursor: pointer;
+            padding: 5px;
+            border-bottom: 1px solid #444;
+        }
+
+        li:hover {
+            background: #333;
+        }
+
+        .mistake-item {
+            cursor: pointer;
+        }
+
+        .mistake-answer {
+            display: none;
+        }
     </style>
 </head>
+
 <body>
     <button id="toggle-sidebar">☰ Menu</button>
     <button id="toggle-right-sidebar">☰ Mistakes</button>
@@ -150,184 +223,209 @@
     </div>
     <footer>Created by Akash Kumar</footer>
 
-<script>
-// Define quizzes for 33 quizzes with multiple possible correct answers
-const quizzes = {
-    "Quiz Ex": {
-        "規制 (きせい / kisei)": ["Regulation", "restriction"],
-        "個人主義 (こじんしゅぎ / kojin shugi)": ["Individualism"],
-        "家父長制度 (かふちょうせいど / kafuchō seido)": ["Patriarchal system"],
-        "権力 (けんりょく / kenryoku)": ["Power", "authority"],
-        "モラル (moraru)": ["Morals", "ethics"],
-        "支配 (しはい / shihai)": ["Control", "domination"],
-        "美名 (びめい / bimei)": ["Good reputation", "fine name"],
-        "真裏 (まうら / maura)": ["The exact opposite", "the reverse side"],
-        "見えざる手 (みえざるて / miezaru te)": ["Invisible hand"],
-        "情報 (じょうほう / jōhō)": ["Information"]
-    },
-"Quiz 1": {
-    "尊ぶ (とうとぶ / to-tobu)": ["To respect", "to honor"],
-    "体制的 (たいせいてき / taiseiteki)": ["Related to the system or regime"],
-    "芸術家 (げいじゅつか / geijutsuka)": ["Artist", "someone who creates art"],
-    "バレリーナ (barerīna)": ["Ballerina", "a female ballet dancer"],
-    "配給 (はいきゅう / haikyū)": ["To distribute", "to supply", "often referring to government-controlled goods like food"],
-    "優遇する (ゆうぐうする / yūgū suru)": ["To favor", "to give preferential treatment"],
-    "職業 (しょくぎょう / shokugyō)": ["Profession", "occupation"],
-    "等 (など / nado)": ["Etcetera", "and so on", "or similar"],
-    "義務教育 (ぎむきょういく / gimukyōiku)": ["Compulsory education", "mandatory schooling"],
-    "教科 (きょうか / kyōka)": ["Subject", "curriculum"],
-    "時間 (じかん / jikan)": ["Time", "referring to a period or class time"],
-    "減らす (へらす / herasu)": ["To reduce", "to decrease"],
-    "国策 (こくさく / kokusaku)": ["National policy"],
-    "科学的 (かがくてき / kagakuteki)": ["Scientific"],
-    "発見 (はっけん / hakken)": ["Discovery"],
-    "迅速な (じんそくな / jinsokuna)": ["Swift", "prompt"],
-    "役に立たない (やくにたたない / yaku ni tatanai)": ["Useless", "not helpful"],
-    "感性 (かんせい / kansei)": ["Sensibility", "sensitivity", "the ability to perceive beauty"],
-    "執拗な (しつような / shitsuyōna)": ["Persistent", "tenacious"],
-    "努力する (どりょくする / doryoku suru)": ["To make an effort", "to strive"],
-    "両輪 (りょうりん / ryōrin)": ["Two wheels", "used metaphorically for two complementary components"],
-    "開く (ひらく / hiraku)": ["To open", "to develop", "to create"],
-    "創造する (そうぞうする / sōzō suru)": ["To create", "to bring into existence"]
-},
+    <script>
+        // Define quizzes with different types of answers (Kanji, Hiragana, English)
+        const quizzes = {
+            "Quiz Ex": {
+                "規制": ["きせい", "Regulation", "restriction"],  // Kanji, Hiragana, and English meanings
+                "個人主義": ["こじんしゅぎ", "Individualism"],  // Kanji and Hiragana with English meaning
+                "家父長制度": ["かふちょうせいど", "Patriarchal system"],  // Kanji and Hiragana with English meaning
+                "権力": ["けんりょく", "Power", "authority"],  // Kanji, Hiragana, and English meanings
+                "モラル": ["モラル", "Morals", "ethics"],  // Kanji/Hiragana and English meanings
+                "支配": ["しはい", "Control", "domination"],  // Kanji, Hiragana, and English meanings
+                "美名": ["びめい", "Good reputation", "fine name"],  // Kanji, Hiragana, and English meanings
+                "真裏": ["まうら", "The exact opposite", "the reverse side"],  // Kanji, Hiragana, and English meanings
+                "見えざる手": ["みえざるて", "Invisible hand"],  // Kanji, Hiragana, and English meanings
+                "情報": ["じょうほう", "Information"]  // Kanji, Hiragana, and English meanings
+            },
+            "Quiz 1": {
+                "尊ぶ": ["とうとぶ", "To respect", "To honor"],  // Kanji, Hiragana, and English meanings
+                "体制的": ["たいせいてき", "Related to the system or regime"],  // Kanji, Hiragana, and English meanings
+                "芸術家": ["げいじゅつか", "Artist", "someone who creates art"],  // Kanji, Hiragana, and English meanings
+                "バレリーナ": ["バレリーナ", "Ballerina", "a female ballet dancer"],  // Kanji/Hiragana and English meanings
+                "配給": ["はいきゅう", "To distribute", "to supply"],  // Kanji, Hiragana, and English meanings
+                "優遇する": ["ゆうぐうする", "To favor", "To give preferential treatment"],  // Kanji, Hiragana, and English meanings
+                "職業": ["しょくぎょう", "Profession", "occupation"],  // Kanji, Hiragana, and English meanings
+                "等": ["など", "Etcetera", "and so on"],  // Kanji, Hiragana, and English meanings
+                "義務教育": ["ぎむきょういく", "Compulsory education", "mandatory schooling"],  // Kanji, Hiragana, and English meanings
+                "教科": ["きょうか", "Subject", "curriculum"]  // Kanji, Hiragana, and English meanings
+            },
+            "Quiz 1(2)": {
+                "時間": ["じかん", "Time", "referring to a period or class time"],
+                "減らす": ["へらす", "To reduce", "to decrease"],
+                "国策": ["こくさく", "National policy"],
+                "科学的": ["かがくてき", "Scientific"],
+                "発見": ["はっけん", "Discovery"],
+                "迅速な": ["じんそくな", "Swift", "prompt"],
+                "役に立たない": ["やくにたたない", "Useless", "not helpful"],
+                "感性": ["かんせい", "Sensibility", "sensitivity, the ability to perceive beauty"],
+                "執拗な": ["しつような", "Persistent", "tenacious"],
+                "努力する": ["どりょくする", "To make an effort", "to strive"],
+                "両輪": ["りょうりん", "Two wheels", "used metaphorically for two complementary components"],
+                "開く": ["ひらく", "To open", "to develop, to create"],
+                "創造する": ["そうぞうする", "To create", "to bring into existence"]
 
-"Quiz 2": {
-    "大同小異 (だいどうしょうい / daidō shōi)": ["Almost the same"],
-    "往き来 (いきき / ikiki)": ["Going back and forth"],
-    "小異 (しょうい / shōi)": ["Small difference"],
-    "雑誌 (ざっし / zasshi)": ["Magazine"],
-    "求める (もとめる / motomeru)": ["To ask for"],
-    "都市風景 (としふうけい / toshi fūkei)": ["Cityscape"],
-    "多角的 (たかくてき / takakuteki)": ["From many perspectives"],
-    "企画 (きかく / kikaku)": ["Plan", "project"],
-    "相談 (そうだん / sōdan)": ["Consultation"],
-    "迷わず (まよわず / mayowazu)": ["Without hesitation"],
-    "大阪湾岸 (おおさかわんがん / ōsaka wangan)": ["Osaka Bay area"],
-    "工場群 (こうじょうぐん / kōjō gun)": ["Factory group"],
-    "港湾施設 (こうわんしせつ / kōwan shisetsu)": ["Port facilities"],
-    "風景 (ふうけい / fūkei)": ["Landscape"],
-    "編集者 (へんしゅうしゃ / henshūsha)": ["Editor"],
-    "驚く (おどろく / odoroku)": ["To be surprised"],
-    "岸壁 (がんぺき / ganpeki)": ["Wharf"],
-    "一般市民 (いっぱんしみん / ippan shimin)": ["General public"],
-    "当たり前 (あたりまえ / atarimae)": ["As expected"],
-    "事実 (じじつ / jijitsu)": ["Fact"],
-    "港 (みなと / minato)": ["Harbor"],
-    "発着場 (はっちゃくじょう / hacchakujō)": ["Boarding place"],
-    "海岸線 (かいがんせん / kaigansen)": ["Coastline"],
-    "倉庫 (そうこ / sōko)": ["Warehouse"],
-    "埋立地 (うめたてち / umatatechi)": ["Reclaimed land"],
-    "埠頭 (ふとう / futō)": ["Pier"],
-    "私有地 (しゆうち / shiyūchi)": ["Private land"],
-    "管理地 (かんりち / kanrichi)": ["Managed land"],
-    "出入口 (でいりぐち / deiriguchi)": ["Entrance and exit"],
-    "閉じる (とじる / tojiro)": ["To close"],
-    "開く (ひらく / hiraku)": ["To open"],
-    "文藝春秋 (ぶんげいしゅんじゅう / bungei shunjū)": ["Literary magazine"],
-    "驚愕 (きょうがく / kyōgaku)": ["Shock"],
-    "自由 (じゆう / jiyū)": ["Freedom"],
-    "制限 (せいげん / seigen)": ["Limitation"]
-}
+            },
+
+            "Quiz 2(1)": {
+                "大同小異": ["だいどうしょうい", "Almost the same"],
+                "往き来": ["いきき", "Going back and forth"],
+                "小異": ["しょうい", "Small difference"],
+                "雑誌": ["ざっし", "Magazine"],
+                "求める": ["もとめる", "To ask for"],
+                "都市風景": ["としふうけい", "Cityscape"],
+                "多角的": ["たかくてき", "From many perspectives"],
+                "企画": ["きかく", "Plan", "project"],
+                "相談": ["そうだん", "Consultation"],
+                "迷わず": ["まよわず", "Without hesitation"],
 
 
-};
+            },
+            "Quiz 2(2)": {
+                "大阪湾岸": ["おおさかわんがん", "Osaka Bay area"],
+                "工場群": ["こうじょうぐん", "Factory group"],
+                "港湾施設": ["こうわんしせつ", "Port facilities"],
+                "風景": ["ふうけい", "Landscape"],
+                "編集者": ["へんしゅうしゃ", "Editor"],
+                "驚く": ["おどろく", "To be surprised"],
+                "岸壁": ["がんぺき", "Wharf"],
+                "一般市民": ["いっぱんしみん", "General public"],
+                "当たり前": ["あたりまえ", "As expected"],
+                "事実": ["じじつ", "Fact"],
 
-let mistakes = JSON.parse(localStorage.getItem('mistakes')) || [];
-let currentWord = "", currentQuiz = "Quiz 1", wrongAttempts = 0;
 
-function loadQuizzes() {
-    let quizList = document.getElementById("quiz-list");
-    quizList.innerHTML = "";
-    for (let quiz in quizzes) {
-        let li = document.createElement("li");
-        li.textContent = quiz;
-        li.onclick = () => { currentQuiz = quiz; newQuestion(); };
-        quizList.appendChild(li);
-    }
-}
+            },
+            "Quiz 2(2)": {
+                "港": ["みなと", "Harbor"],
+                "発着場": ["はっちゃくじょう", "Boarding place"],
+                "海岸線": ["かいがんせん", "Coastline"],
+                "倉庫": ["そうこ", "Warehouse"],
+                "埋立地": ["うめたてち", "Reclaimed land"],
+                "埠頭": ["ふとう", "Pier"],
+                "私有地": ["しゆうち", "Private land"],
+                "管理地": ["かんりち", "Managed land"],
+                "出入口": ["でいりぐち", "Entrance and exit"],
+                "閉じる": ["とじる", "To close"],
+                "開く": ["ひらく", "To open"],
+                "文藝春秋": ["ぶんげいしゅんじゅう", "Literary magazine"],
+                "驚愕": ["きょうがく", "Shock"],
+                "自由": ["じゆう", "Freedom"],
+                "制限": ["せいげん", "Limitation"]
 
-function newQuestion() {
-    let words = quizzes[currentQuiz];
-    let keys = Object.keys(words);
-    currentWord = keys[Math.floor(Math.random() * keys.length)];
-    document.getElementById("question").innerText = `What is the meaning of: ${currentWord}`;
-    document.getElementById("answer").value = "";
-    document.getElementById("show-answer").style.display = "none";
-    document.getElementById("next-quiz").style.display = "none";
-    document.getElementById("result").innerText = "";
-    wrongAttempts = 0;
-}
 
-function checkAnswer() {
-    let userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-    let correctAnswers = quizzes[currentQuiz][currentWord].map(answer => answer.toLowerCase());
+            },
 
-    if (correctAnswers.includes(userAnswer)) {
-        document.getElementById("result").innerText = "Correct!";
-        setTimeout(newQuestion, 1000);
-    } else {
-        wrongAttempts++;
-        document.getElementById("result").innerText = "Incorrect! Try again.";
-        
-        // Add to mistakes if not already there
-        if (!mistakes.some(item => item.word === currentWord)) {
-            mistakes.push({ word: currentWord, correctAnswer: quizzes[currentQuiz][currentWord].join(", ") });
-            localStorage.setItem('mistakes', JSON.stringify(mistakes)); // Save to localStorage
-            updateMistakes();
+            // Add more quizzes as needed...
+        };
+
+        let mistakes = JSON.parse(localStorage.getItem('mistakes')) || [];
+        let currentWord = "", currentQuiz = "Quiz Ex", wrongAttempts = 0;
+
+        function loadQuizzes() {
+            let quizList = document.getElementById("quiz-list");
+            quizList.innerHTML = "";
+            for (let quiz in quizzes) {
+                let li = document.createElement("li");
+                li.textContent = quiz;
+                li.onclick = () => { currentQuiz = quiz; newQuestion(); };
+                quizList.appendChild(li);
+            }
         }
-        
-        document.getElementById("show-answer").style.display = "inline-block";
-    }
-}
 
-function showAnswer() {
-    let correctAnswer = quizzes[currentQuiz][currentWord].join(", ");
-    document.getElementById("result").innerText = `Correct Answer: ${correctAnswer}`;
-    document.getElementById("next-quiz").style.display = "inline-block";
-}
+        function newQuestion() {
+            let words = quizzes[currentQuiz];
+            let keys = Object.keys(words);
+            currentWord = keys[Math.floor(Math.random() * keys.length)];
+            // If the question is asking for a meaning (Kanji or Hiragana), display the word
+            if (words[currentWord].length === 3) {  // Means there are both Kanji/Hiragana + English answers
+                document.getElementById("question").innerText = `What is the meaning of: ${currentWord} or ${words[currentWord][0]}`;
+            } else {  // If it's asking for the Hiragana form
+                document.getElementById("question").innerText = `What is the Hiragana meaning of Kanji: ${currentWord}`;
+            }
+            document.getElementById("answer").value = "";
+            document.getElementById("show-answer").style.display = "none";
+            document.getElementById("next-quiz").style.display = "none";
+            document.getElementById("result").innerText = "";
+            wrongAttempts = 0;
+        }
 
-function updateMistakes() {
-    let mistakeList = document.getElementById("mistake-list");
-    mistakeList.innerHTML = ""; // Clear previous mistakes
+        function checkAnswer() {
+            let userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+            let correctAnswers = quizzes[currentQuiz][currentWord].map(answer => answer.toLowerCase());
 
-    mistakes.forEach(mistake => {
-        let li = document.createElement("li");
-        li.classList.add("mistake-item");
-        li.textContent = mistake.word;
-        let answer = document.createElement("span");
-        answer.classList.add("mistake-answer");
-        answer.textContent = ` - ${mistake.correctAnswer}`;
-        li.appendChild(answer);
+            // If the question asks for the Hiragana form, it should only accept the Hiragana answer
+            if (document.getElementById("question").innerText.includes("Hiragana meaning")) {
+                correctAnswers = [quizzes[currentQuiz][currentWord][0].toLowerCase()]; // Only accept Hiragana
+            }
 
-        li.onclick = () => answer.style.display = answer.style.display === "none" ? "inline" : "none";
-        mistakeList.appendChild(li);
-    });
-}
+            // Check if the answer is correct
+            if (correctAnswers.includes(userAnswer)) {
+                document.getElementById("result").innerText = "Correct!";
+                setTimeout(newQuestion, 1000);
+            } else {
+                wrongAttempts++;
+                document.getElementById("result").innerText = "Incorrect! Try again.";
 
-// Sidebar toggle
-document.getElementById("toggle-sidebar").addEventListener("click", function() {
-    document.getElementById("sidebar").classList.toggle("active");
-    if (document.getElementById("right-sidebar").classList.contains("active")) {
-        document.getElementById("right-sidebar").classList.remove("active");
-    }
-});
+                // Add to mistakes if not already there
+                if (!mistakes.some(item => item.word === currentWord)) {
+                    mistakes.push({ word: currentWord, correctAnswer: quizzes[currentQuiz][currentWord].join(", ") });
+                    localStorage.setItem('mistakes', JSON.stringify(mistakes)); // Save to localStorage
+                    updateMistakes();
+                }
 
-document.getElementById("toggle-right-sidebar").addEventListener("click", function() {
-    document.getElementById("right-sidebar").classList.toggle("active");
-    if (document.getElementById("sidebar").classList.contains("active")) {
-        document.getElementById("sidebar").classList.remove("active");
-    }
-});
+                document.getElementById("show-answer").style.display = "inline-block";
+            }
+        }
 
-// Toggle night mode
-document.getElementById("night-mode-toggle").addEventListener("click", function() {
-    document.body.classList.toggle("night-mode");
-});
+        function showAnswer() {
+            let correctAnswer = quizzes[currentQuiz][currentWord].join(", ");
+            document.getElementById("result").innerText = `Correct Answer: ${correctAnswer}`;
+            document.getElementById("next-quiz").style.display = "inline-block";
+        }
 
-loadQuizzes();
-newQuestion();
-updateMistakes();
-</script>
+        function updateMistakes() {
+            let mistakeList = document.getElementById("mistake-list");
+            mistakeList.innerHTML = ""; // Clear previous mistakes
 
+            mistakes.forEach(mistake => {
+                let li = document.createElement("li");
+                li.classList.add("mistake-item");
+                li.textContent = mistake.word;
+                let answer = document.createElement("span");
+                answer.classList.add("mistake-answer");
+                answer.textContent = ` - ${mistake.correctAnswer}`;
+                li.appendChild(answer);
+
+                li.onclick = () => answer.style.display = answer.style.display === "none" ? "inline" : "none";
+                mistakeList.appendChild(li);
+            });
+        }
+
+        // Sidebar toggle
+        document.getElementById("toggle-sidebar").addEventListener("click", function () {
+            document.getElementById("sidebar").classList.toggle("active");
+            if (document.getElementById("right-sidebar").classList.contains("active")) {
+                document.getElementById("right-sidebar").classList.remove("active");
+            }
+        });
+
+        document.getElementById("toggle-right-sidebar").addEventListener("click", function () {
+            document.getElementById("right-sidebar").classList.toggle("active");
+            if (document.getElementById("sidebar").classList.contains("active")) {
+                document.getElementById("sidebar").classList.remove("active");
+            }
+        });
+
+        // Toggle night mode
+        document.getElementById("night-mode-toggle").addEventListener("click", function () {
+            document.body.classList.toggle("night-mode");
+        });
+
+        loadQuizzes();
+        newQuestion();
+        updateMistakes();
+
+    </script>
 </body>
+
 </html>
