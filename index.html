@@ -425,6 +425,33 @@
         newQuestion();
         updateMistakes();
 
+        document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("sidebar");
+    const rightSidebar = document.getElementById("right-sidebar");
+    const sidebarLinks = sidebar.querySelectorAll("li");
+    const rightSidebarLinks = rightSidebar.querySelectorAll("li");
+
+    function closeSidebar(event) {
+        // Check if the clicked item belongs to the left or right sidebar
+        if (sidebar.contains(event.target)) {
+            sidebar.classList.remove("active");
+        }
+        if (rightSidebar.contains(event.target)) {
+            rightSidebar.classList.remove("active");
+        }
+    }
+
+    // Attach click event listeners to quiz list items in both sidebars
+    sidebarLinks.forEach(link => {
+        link.addEventListener("click", closeSidebar);
+    });
+
+    rightSidebarLinks.forEach(link => {
+        link.addEventListener("click", closeSidebar);
+    });
+});
+
+
     </script>
 </body>
 
