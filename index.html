@@ -216,7 +216,7 @@
         <h2>Japanese Word Quiz</h2>
         <h3 id="question">Loading...</h3>
         <input type="text" id="answer" placeholder="Enter meaning">
-        <button onclick="checkAnswer()">Submit</button>
+        <button id="submit-button" onclick="checkAnswer()">Submit</button>
         <button id="show-answer" onclick="showAnswer()" style="display: none;">Show Answer</button>
         <button id="next-quiz" onclick="newQuestion()" style="display: none;">Next Quiz</button>
         <p id="result"></p>
@@ -447,6 +447,14 @@
         link.addEventListener("click", closeSidebar);
     });
 });
+  // submit when pressing enter
+        document.getElementById("answer").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevent accidental form submission
+        document.getElementById("submit-button").click(); // Click the submit button
+    }
+});
+
 
 
     </script>
