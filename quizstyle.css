@@ -1,0 +1,508 @@
+:root {
+    --color-background: #f7f7f7;
+    --color-background-night: #1a1a1a;
+    --color-text: #333;
+    --color-text-night: #eee;
+    --color-primary: #5cb85c;
+    --color-primary-dark: #4cae4c;
+    --color-secondary: #428bca;
+    --color-secondary-light: #5dade2;
+    --color-secondary-lighter: #85c1e9;
+    --color-white: #fff;
+    --color-correct: #5cb85c;
+    --color-wrong: #d9534f;
+    --color-option-background: #fff;
+    --color-option-background-hover: #f0f0f0;
+    --font-family-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: var(--font-family-base);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background: var(--color-secondary);
+    color: var(--color-white);
+    padding: 25px;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    /* Enable vertical scrolling */
+    padding-bottom: 60px;
+    /* Add padding at the bottom to prevent content crop */
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    left: 0;
+    top: 0;
+    transform: translateX(-105%);
+    z-index: 1100;
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+
+.sidebar.show {
+    transform: translateX(0);
+    box-shadow: 10px 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: var(--color-white);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInSlideDown 0.3s forwards 0.3s;
+    /* Faster animation duration */
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    margin: 8px 0;
+    background: var(--color-secondary-light);
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    transition: background-color 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    border-radius: 7px;
+    text-align: left;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeInSlideRight 0.3s forwards calc(0.5s + var(--button-delay, 0s));
+    /* Faster animation duration */
+}
+
+
+.sidebar button:hover {
+    background: var(--color-secondary-lighter);
+    transform: scale(1.03);
+}
+
+.quiz-container {
+    background-color: var(--color-white);
+    color: var(--color-text);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    width: 95%;
+    max-width: 700px;
+    margin: 50px auto;
+    text-align: center;
+    flex: 1;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInSlideUp 0.3s forwards 0.2s;
+    /* Faster animation duration */
+}
+
+.quiz-title {
+    margin-bottom: 25px;
+    font-size: 2.5em;
+    color: var(--color-primary);
+    animation: pulseColor 2s infinite alternate;
+}
+
+.question {
+    font-size: 1.4em;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeInSlideDown 0.3s forwards 0.5s;
+    /* Faster animation duration */
+}
+
+.options {
+    display: grid;
+    gap: 15px;
+    animation-delay: 0.7s;
+    animation-fill-mode: backwards;
+}
+
+.option {
+    padding: 15px;
+    background-color: var(--color-option-background);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.08);
+    font-size: 1.1em;
+    opacity: 0;
+    transform: scale(0.95);
+    animation: fadeInScaleUp 0.3s forwards calc(0.9s + var(--option-delay, 0s));
+    /* Faster animation duration */
+}
+
+
+.option:hover {
+    background-color: var(--color-option-background-hover);
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.15);
+    transform: scale(1.01);
+}
+
+.option.correct {
+    background-color: var(--color-correct) !important;
+    color: var(--color-white);
+    box-shadow: none;
+    animation: pulseCorrect 1.5s infinite alternate 1s;
+}
+
+.option.wrong {
+    background-color: var(--color-wrong) !important;
+    color: var(--color-white);
+    box-shadow: none;
+    animation: shakeWrong 0.3s ease-in-out 1s;
+    /* Faster animation duration */
+}
+
+.option.disabled {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.feedback {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.2em;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInSlideUp 0.3s forwards 1.2s;
+    /* Faster animation duration */
+}
+
+.feedback.correct-feedback {
+    color: var(--color-correct);
+}
+
+.feedback.wrong-feedback {
+    color: var(--color-wrong);
+}
+
+.explanation {
+    margin-top: 10px;
+    font-weight: normal;
+    font-size: 0.95em;
+    color: var(--color-secondary-light);
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInSlideUp 0.3s forwards 1.4s;
+    /* Faster animation duration */
+}
+
+.example-sentence {
+    margin-top: 10px;
+    font-style: italic;
+    font-size: 0.9em;
+    color: var(--color-text);
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInSlideUp 0.3s forwards 1.6s;
+    /* Faster animation duration */
+}
+
+.example-sentence.night-mode-sentence {
+    color: var(--color-secondary-lighter);
+    /* Adjusted color for night mode */
+}
+
+
+.sentence-translation {
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: var(--color-secondary-light);
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInSlideUp 0.3s forwards 1.8s;
+    /* Faster animation duration */
+}
+
+.sentence-meaning {
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: var(--color-text);
+    /* Default color for sentence meaning */
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeInSlideUp 0.3s forwards 2.0s;
+    /* Faster animation duration */
+}
+
+.night-mode .sentence-meaning {
+    color: var(--color-text-night);
+    /* Color for sentence meaning in night mode */
+}
+
+
+.hidden {
+    display: none;
+}
+
+.night-mode {
+    background: var(--color-background-night);
+    color: var(--color-text-night);
+}
+
+.night-mode .quiz-container {
+    background-color: #2a2a2a;
+    color: var(--color-text-night);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
+}
+
+.night-mode .option {
+    background-color: #333;
+    color: var(--color-text-night);
+}
+
+.night-mode .option:hover {
+    background-color: #444;
+}
+
+
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    z-index: 1101;
+    transition: background-color 0.4s ease, transform 0.4s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.menu-toggle:hover {
+    background: var(--color-primary-dark);
+    transform: scale(1.05);
+}
+
+.night-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--color-secondary);
+    color: var(--color-white);
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    z-index: 1101;
+    transition: background-color 0.4s ease, transform 0.4s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.night-mode-toggle:hover {
+    background: var(--color-secondary-light);
+    transform: scale(1.05);
+}
+
+
+.scoreboard {
+    margin-top: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSlideUp 0.3s forwards 2s;
+    /* Faster animation duration */
+}
+
+.scoreboard span {
+    font-weight: normal;
+    color: var(--color-secondary-light);
+}
+
+.next-button-container {
+    margin-top: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSlideUp 0.2ms forwards 2s;
+    /* Reduced delay to 0.2ms */
+}
+
+.next-button {
+    padding: 12px 25px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.next-button:hover {
+    background-color: var(--color-primary-dark);
+    transform: scale(1.05);
+}
+
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    -webkit-clip-path: inset(50%) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Animations Keyframes */
+@keyframes fadeInSlideDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInSlideRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInScaleUp {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseColor {
+
+    0%,
+    100% {
+        color: var(--color-primary);
+    }
+
+    50% {
+        color: var(--color-primary-dark);
+    }
+}
+
+@keyframes pulseCorrect {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes shakeWrong {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-5px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(5px);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 90%;
+        padding: 20px;
+        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .menu-toggle {
+        top: 10px;
+        left: 10px;
+        padding: 10px 15px;
+    }
+
+    .night-mode-toggle {
+        top: 10px;
+        right: 10px;
+        padding: 10px 15px;
+    }
+
+
+    .quiz-container {
+        padding: 25px;
+        margin-top: 70px;
+        border-radius: 10px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .quiz-title {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .question {
+        font-size: 1.2em;
+        margin-bottom: 25px;
+    }
+
+    .options {
+        gap: 12px;
+    }
+
+    .option {
+        padding: 12px;
+        font-size: 1em;
+        border-radius: 6px;
+    }
+
+    .feedback {
+        margin-top: 15px;
+        font-size: 1.1em;
+    }
+
+    .scoreboard {
+        margin-top: 25px;
+        font-size: 1em;
+    }
+
+    .next-button-container {
+        margin-top: 25px;
+    }
+
+    .next-button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 6px;
+    }
+}
