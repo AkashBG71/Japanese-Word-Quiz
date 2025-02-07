@@ -5,459 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Japanese Word Quiz</title>
+    <link rel="stylesheet" href="indexstyle.css">
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            background-color: #121212;
-            /* Dark mode by default */
-            color: white;
-            /* Dark mode text color */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        button:hover {
+          background-color: #2980b9;
+          box-shadow: 0 7px 20px rgba(0,0,0,0.25);
+          transform: translateY(-2px);
         }
-
-        body.night-mode {
-            background-color: #121212;
-            color: white;
+      
+        button:active {
+          transform: translateY(0);
+          box-shadow: 0 3px 10px rgba(0,0,0,0.2);
         }
+      </style>
 
-        body:not(.night-mode) {
-            background-color: #b16f6f;
-            /* Light mode background */
-            color: black;
-            /* Light mode text color */
-        }
-
-        #sidebar {
-            width: 290px;
-            padding: 15px;
-            position: fixed;
-            top: 0;
-            height: 100%;
-            overflow-y: auto;
-            z-index: 1000;
-            transition: transform 0.3s ease-in-out;
-            /* Smooth transition */
-        }
-
-        #right-sidebar {
-            width: 290px;
-            padding: 15px;
-            position: fixed;
-            top: 0;
-            height: 100%;
-            overflow-y: auto;
-            z-index: 1000;
-            transition: transform 0.3s ease-in-out;
-            /* Smooth transition */
-        }
-
-        #sidebar {
-            left: -320px;
-            /* Initially hidden off-screen */
-            background: #222;
-            /* Default sidebar color for dark mode */
-        }
-
-        #right-sidebar {
-            right: -320px;
-            /* Initially hidden off-screen */
-            background: #222;
-            /* Default sidebar color for dark mode */
-        }
-
-        body:not(.night-mode) #sidebar,
-        body:not(.night-mode) #right-sidebar {
-            background: white;
-            /* Sidebar color for light mode */
-        }
-
-        body:not(.night-mode) #sidebar li,
-        body:not(.night-mode) #right-sidebar li {
-            color: black;
-            /* Text color for light mode */
-        }
-
-        #sidebar.active {
-            transform: translateX(290px);
-            /* Move sidebar into view */
-        }
-
-        #right-sidebar.active {
-            transform: translateX(-290px);
-            /* Move right sidebar into view */
-        }
-
-        #toggle-sidebar,
-        #toggle-right-sidebar {
-            position: fixed;
-            top: 20px;
-            background: #444;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            z-index: 1100;
-        }
-
-        #toggle-sidebar {
-            left: 10px;
-        }
-
-        #toggle-right-sidebar {
-            right: 10px;
-        }
-
-        #night-mode-toggle {
-            position: fixed;
-            bottom: 20px;
-            background: #444;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        #quiz-container {
-            margin-top: 60px;
-            max-width: 500px;
-            padding: 50px;
-            text-align: center;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            transform: scale(0);
-            animation: bloom 0.5s forwards;
-        }
-
-        @keyframes bloom {
-            from {
-                transform: scale(0);
-            }
-
-            to {
-                transform: scale(1);
-            }
-        }
-
-        input,
-        button {
-            padding: 10px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        button {
-            background: #444;
-            color: white;
-            cursor: pointer;
-        }
-
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        body.night-mode footer {
-            color: white;
-        }
-
-        body:not(.night-mode) footer {
-            background-color: black;
-            color: white;
-            /* Footer color for light mode */
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        li {
-            cursor: pointer;
-            padding: 5px;
-            border-bottom: 1px solid #444;
-        }
-
-        li:hover {
-            background: #333;
-        }
-
-        .mistake-item {
-            cursor: pointer;
-        }
-
-        .mistake-answer {
-            display: none;
-        }
-    </style>
 </head>
 
-<body>
-    <button id="toggle-sidebar">☰ Menu</button>
-    <button id="toggle-right-sidebar">☰ Mistakes</button>
-    <button id="night-mode-toggle">🌙 Night Mode</button>
+<body class="night-mode">
     <div id="sidebar">
         <h3>Quizzes</h3>
         <ul id="quiz-list"></ul>
     </div>
+    <button id="toggle-sidebar" aria-label="Toggle Menu">☰ Menu</button>
     <div id="right-sidebar">
-        <h3><br><br>Mistakes</br></br></h3>
+        <h3>Mistakes</h3>
         <ul id="mistake-list"></ul>
     </div>
+    <button id="toggle-right-sidebar" aria-label="Toggle Mistakes">☰ Mistakes</button>
+
+
     <div id="quiz-container">
         <h2>Japanese Word Quiz</h2>
         <h3 id="question">Loading...</h3>
-        <input type="text" id="answer" placeholder="Enter meaning">
+        <input type="text" id="answer" placeholder="Enter answer" aria-label="Your Answer">
         <button id="submit-button" onclick="checkAnswer()">Submit</button>
         <button id="show-answer" onclick="showAnswer()" style="display: none;">Show Answer</button>
         <button id="next-quiz" onclick="newQuestion()" style="display: none;">Next Quiz</button>
-        <p id="result"></p>
+        <p id="result" aria-live="polite"></p>
     </div>
-    <footer>Created by Akash Kumar</footer>
+    <button style="
+    display: inline-block;
+    background-color: #3498db;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.1em;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    text-align: center;
+    text-decoration: none;
+">
+    <a href="Quiz.html" style="
+        color: inherit;
+        text-decoration: none;
+        display: block;
+    ">
+        <span style="display: inline-block; vertical-align: middle;">✨</span>
+        <span style="display: inline-block; vertical-align: middle; margin-left: 8px;">Go to Optionwise Quiz</span>
+        <span style="display: inline-block; vertical-align: middle; margin-left: 8px;">🚀</span>
+    </a>
+</button>
 
-    <script>
-        // Define quizzes with different types of answers (Kanji, Hiragana, English)
-        const quizzes = {
-            "Quiz Ex": {
-                "規制": ["きせい", "Regulation", "restriction"],  // Kanji, Hiragana, and English meanings
-                "個人主義": ["こじんしゅぎ", "Individualism"],  // Kanji and Hiragana with English meaning
-                "家父長制度": ["かふちょうせいど", "Patriarchal system"],  // Kanji and Hiragana with English meaning
-                "権力": ["けんりょく", "Power", "authority"],  // Kanji, Hiragana, and English meanings
-                "モラル": ["モラル", "Morals", "ethics"],  // Kanji/Hiragana and English meanings
-                "支配": ["しはい", "Control", "domination"],  // Kanji, Hiragana, and English meanings
-                "美名": ["びめい", "Good reputation", "fine name"],  // Kanji, Hiragana, and English meanings
-                "真裏": ["まうら", "The exact opposite", "the reverse side"],  // Kanji, Hiragana, and English meanings
-                "見えざる手": ["みえざるて", "Invisible hand"],  // Kanji, Hiragana, and English meanings
-                "情報": ["じょうほう", "Information"]  // Kanji, Hiragana, and English meanings
-            },
-            "Quiz 1": {
-                "尊ぶ": ["とうとぶ", "To respect", "To honor"],  // Kanji, Hiragana, and English meanings
-                "体制的": ["たいせいてき", "Related to the system or regime"],  // Kanji, Hiragana, and English meanings
-                "芸術家": ["げいじゅつか", "Artist", "someone who creates art"],  // Kanji, Hiragana, and English meanings
-                "バレリーナ": ["バレリーナ", "Ballerina", "a female ballet dancer"],  // Kanji/Hiragana and English meanings
-                "配給": ["はいきゅう", "To distribute", "to supply"],  // Kanji, Hiragana, and English meanings
-                "優遇する": ["ゆうぐうする", "To favor", "To give preferential treatment"],  // Kanji, Hiragana, and English meanings
-                "職業": ["しょくぎょう", "Profession", "occupation"],  // Kanji, Hiragana, and English meanings
-                "等": ["など", "Etcetera", "and so on"],  // Kanji, Hiragana, and English meanings
-                "義務教育": ["ぎむきょういく", "Compulsory education", "mandatory schooling"],  // Kanji, Hiragana, and English meanings
-                "教科": ["きょうか", "Subject", "curriculum"]  // Kanji, Hiragana, and English meanings
-            },
-            "Quiz 1(2)": {
-                "時間": ["じかん", "Time", "referring to a period or class time"],
-                "減らす": ["へらす", "To reduce", "to decrease"],
-                "国策": ["こくさく", "National policy"],
-                "科学的": ["かがくてき", "Scientific"],
-                "発見": ["はっけん", "Discovery"],
-                "迅速な": ["じんそくな", "Swift", "prompt"],
-                "役に立たない": ["やくにたたない", "Useless", "not helpful"],
-                "感性": ["かんせい", "Sensibility", "sensitivity, the ability to perceive beauty"],
-                "執拗な": ["しつような", "Persistent", "tenacious"],
-                "努力する": ["どりょくする", "To make an effort", "to strive"],
-                "両輪": ["りょうりん", "Two wheels", "used metaphorically for two complementary components"],
-                "開く": ["ひらく", "To open", "to develop, to create"],
-                "創造する": ["そうぞうする", "To create", "to bring into existence"]
+    <footer>
+        <button id="night-mode-toggle" aria-label="Toggle Night Mode">🌙 Night Mode</button>
+        <p style="margin-top: 10px;">Created by Akash Kumar</p>
+    </footer>
 
-            },
-
-            "Quiz 2(1)": {
-                "大同小異": ["だいどうしょうい", "Almost the same"],
-                "往き来": ["いきき", "Going back and forth"],
-                "小異": ["しょうい", "Small difference"],
-                "雑誌": ["ざっし", "Magazine"],
-                "求める": ["もとめる", "To ask for"],
-                "都市風景": ["としふうけい", "Cityscape"],
-                "多角的": ["たかくてき", "From many perspectives"],
-                "企画": ["きかく", "Plan", "project"],
-                "相談": ["そうだん", "Consultation"],
-                "迷わず": ["まよわず", "Without hesitation"],
-
-
-            },
-            "Quiz 2(2)": {
-                "大阪湾岸": ["おおさかわんがん", "Osaka Bay area"],
-                "工場群": ["こうじょうぐん", "Factory group"],
-                "港湾施設": ["こうわんしせつ", "Port facilities"],
-                "風景": ["ふうけい", "Landscape"],
-                "編集者": ["へんしゅうしゃ", "Editor"],
-                "驚く": ["おどろく", "To be surprised"],
-                "岸壁": ["がんぺき", "Wharf"],
-                "一般市民": ["いっぱんしみん", "General public"],
-                "当たり前": ["あたりまえ", "As expected"],
-                "事実": ["じじつ", "Fact"],
-
-
-            },
-    "Quiz 2(2)": {
-        "港": ["みなと", "Harbor", "Port"],
-        "発着場": ["はっちゃくじょう", "Boarding place", "Terminal"],
-        "海岸線": ["かいがんせん", "Coastline", "Seashore"],
-        "倉庫": ["そうこ", "Warehouse", "Storage"],
-        "埋立地": ["うめたてち", "Reclaimed land", "Landfill"],
-        "埠頭": ["ふとう", "Pier", "Wharf"],
-        "私有地": ["しゆうち", "Private land", "Proprietary land"],
-        "管理地": ["かんりち", "Managed land", "Overseen land"],
-        "出入口": ["でいりぐち", "Entrance and exit", "Doorway"],
-        "閉じる": ["とじる", "To close", "To shut"],
-        "開く": ["ひらく", "To open", "To unlock"],
-        "文藝春秋": ["ぶんげいしゅんじゅう", "Literary magazine", "Literary journal"],
-        "驚愕": ["きょうがく", "Shock", "Astonishment"],
-        "自由": ["じゆう", "Freedom", "Liberty"],
-        "制限": ["せいげん", "Limitation", "Restriction"]
-
-
-    },
-            // Add more quizzes as needed...
-        };
-
-        let mistakes = JSON.parse(localStorage.getItem('mistakes')) || [];
-        let currentWord = "", currentQuiz = "Quiz Ex", wrongAttempts = 0;
-
-        function loadQuizzes() {
-            let quizList = document.getElementById("quiz-list");
-            quizList.innerHTML = "";
-            for (let quiz in quizzes) {
-                let li = document.createElement("li");
-                li.textContent = quiz;
-                li.onclick = () => { currentQuiz = quiz; newQuestion(); };
-                quizList.appendChild(li);
-            }
-        }
-
-        function newQuestion() {
-            let words = quizzes[currentQuiz];
-            let keys = Object.keys(words);
-            currentWord = keys[Math.floor(Math.random() * keys.length)];
-            // If the question is asking for a meaning (Kanji or Hiragana), display the word
-            if (words[currentWord].length === 3) {  // Means there are both Kanji/Hiragana + English answers
-                document.getElementById("question").innerText = `What is the meaning of: ${currentWord} or ${words[currentWord][0]}`;
-            } else {  // If it's asking for the Hiragana form
-                document.getElementById("question").innerText = `What is the Hiragana meaning of Kanji: ${currentWord}`;
-            }
-            document.getElementById("answer").value = "";
-            document.getElementById("show-answer").style.display = "none";
-            document.getElementById("next-quiz").style.display = "none";
-            document.getElementById("result").innerText = "";
-            wrongAttempts = 0;
-        }
-
-        function checkAnswer() {
-            let userAnswer = document.getElementById("answer").value.trim().toLowerCase();
-            let correctAnswers = quizzes[currentQuiz][currentWord].map(answer => answer.toLowerCase());
-
-            // If the question asks for the Hiragana form, it should only accept the Hiragana answer
-            if (document.getElementById("question").innerText.includes("Hiragana meaning")) {
-                correctAnswers = [quizzes[currentQuiz][currentWord][0].toLowerCase()]; // Only accept Hiragana
-            }
-
-            // Check if the answer is correct
-            if (correctAnswers.includes(userAnswer)) {
-                document.getElementById("result").innerText = "Correct!";
-                setTimeout(newQuestion, 1000);
-            } else {
-                wrongAttempts++;
-                document.getElementById("result").innerText = "Incorrect! Try again.";
-
-                // Add to mistakes if not already there
-                if (!mistakes.some(item => item.word === currentWord)) {
-                    mistakes.push({ word: currentWord, correctAnswer: quizzes[currentQuiz][currentWord].join(", ") });
-                    localStorage.setItem('mistakes', JSON.stringify(mistakes)); // Save to localStorage
-                    updateMistakes();
-                }
-
-                document.getElementById("show-answer").style.display = "inline-block";
-            }
-        }
-
-        function showAnswer() {
-            let correctAnswer = quizzes[currentQuiz][currentWord].join(", ");
-            document.getElementById("result").innerText = `Correct Answer: ${correctAnswer}`;
-            document.getElementById("next-quiz").style.display = "inline-block";
-        }
-
-        function updateMistakes() {
-            let mistakeList = document.getElementById("mistake-list");
-            mistakeList.innerHTML = ""; // Clear previous mistakes
-
-            mistakes.forEach(mistake => {
-                let li = document.createElement("li");
-                li.classList.add("mistake-item");
-                li.textContent = mistake.word;
-                let answer = document.createElement("span");
-                answer.classList.add("mistake-answer");
-                answer.textContent = ` - ${mistake.correctAnswer}`;
-                li.appendChild(answer);
-
-                li.onclick = () => answer.style.display = answer.style.display === "none" ? "inline" : "none";
-                mistakeList.appendChild(li);
-            });
-        }
-
-        // Sidebar toggle
-        document.getElementById("toggle-sidebar").addEventListener("click", function () {
-            document.getElementById("sidebar").classList.toggle("active");
-            if (document.getElementById("right-sidebar").classList.contains("active")) {
-                document.getElementById("right-sidebar").classList.remove("active");
-            }
-        });
-
-        document.getElementById("toggle-right-sidebar").addEventListener("click", function () {
-            document.getElementById("right-sidebar").classList.toggle("active");
-            if (document.getElementById("sidebar").classList.contains("active")) {
-                document.getElementById("sidebar").classList.remove("active");
-            }
-        });
-
-        // Toggle night mode
-        document.getElementById("night-mode-toggle").addEventListener("click", function () {
-            document.body.classList.toggle("night-mode");
-        });
-
-        loadQuizzes();
-        newQuestion();
-        updateMistakes();
-
-        document.addEventListener("DOMContentLoaded", function () {
-    const sidebar = document.getElementById("sidebar");
-    const rightSidebar = document.getElementById("right-sidebar");
-    const sidebarLinks = sidebar.querySelectorAll("li");
-    const rightSidebarLinks = rightSidebar.querySelectorAll("li");
-
-    function closeSidebar(event) {
-        // Check if the clicked item belongs to the left or right sidebar
-        if (sidebar.contains(event.target)) {
-            sidebar.classList.remove("active");
-        }
-       
-    }
-
-    // Attach click event listeners to quiz list items in both sidebars
-    sidebarLinks.forEach(link => {
-        link.addEventListener("click", closeSidebar);
-    });
-
-    rightSidebarLinks.forEach(link => {
-        link.addEventListener("click", closeSidebar);
-    });
-});
-  // submit when pressing enter
-        document.getElementById("answer").addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault(); // Prevent accidental form submission
-        document.getElementById("submit-button").click(); // Click the submit button
-    }
-});
-
-
-
-    </script>
+    <script src="indexscript.js"></script>
+    <!-- <script src="textscript.js"></script> -->
 </body>
 
 </html>
