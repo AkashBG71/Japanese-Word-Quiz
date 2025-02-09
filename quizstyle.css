@@ -90,34 +90,53 @@ body {
 
 /* New styles for sidebar category */
 .sidebar-category .category-items {
-    display: none; /* 初期状態では非表示 */
-    padding-left: 15px; /* インデント */
+    display: none;
+    /* 初期状態では非表示 */
+    padding-left: 15px;
+    /* インデント */
 }
 
 .sidebar-category .category-header {
-    display: block; /* ブロック要素として表示し、クリック領域を確保 */
-    padding: 12px 15px; /* リンクのパディング調整, same as sidebar buttons */
-    margin: 8px 0; /* Same margin as sidebar buttons */
-    background: var(--color-secondary-light); /* Same background as sidebar buttons */
-    border: none; /* Remove border */
-    color: var(--color-white); /* Same text color as sidebar buttons */
-    cursor: pointer; /* カーソルをポインターに */
-    transition: background-color 0.4s ease, transform 0.4s ease, opacity 0.4s ease; /* Same transition as buttons */
-    border-radius: 7px; /* Same border-radius as buttons */
-    text-align: left; /* Text align left */
-    opacity: 1; /* Opacity 1 to be visible by default */
-    transform: translateX(0); /* No translate to be visible by default */
-    animation: none; /* No animation on category header */
-    text-decoration: none; /* Remove underline from link */
+    display: block;
+    /* ブロック要素として表示し、クリック領域を確保 */
+    padding: 12px 15px;
+    /* リンクのパディング調整, same as sidebar buttons */
+    margin: 8px 0;
+    /* Same margin as sidebar buttons */
+    background: var(--color-secondary-light);
+    /* Same background as sidebar buttons */
+    border: none;
+    /* Remove border */
+    color: var(--color-white);
+    /* Same text color as sidebar buttons */
+    cursor: pointer;
+    /* カーソルをポインターに */
+    transition: background-color 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+    /* Same transition as buttons */
+    border-radius: 7px;
+    /* Same border-radius as buttons */
+    text-align: left;
+    /* Text align left */
+    opacity: 1;
+    /* Opacity 1 to be visible by default */
+    transform: translateX(0);
+    /* No translate to be visible by default */
+    animation: none;
+    /* No animation on category header */
+    text-decoration: none;
+    /* Remove underline from link */
 }
 
 .sidebar-category .category-header:hover {
-    background: var(--color-secondary-lighter); /* Same hover as sidebar buttons */
-    transform: scale(1.03); /* Same hover scale as sidebar buttons */
+    background: var(--color-secondary-lighter);
+    /* Same hover as sidebar buttons */
+    transform: scale(1.03);
+    /* Same hover scale as sidebar buttons */
 }
 
 .sidebar-category .category-header::after {
-    content: '\f0da'; /* Font Awesome 下向き矢印 */
+    content: '\f0da';
+    /* Font Awesome 下向き矢印 */
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     float: right;
@@ -125,11 +144,13 @@ body {
 }
 
 .sidebar-category.open .category-header::after {
-    content: '\f0d7'; /* Font Awesome 上向き矢印 */
+    content: '\f0d7';
+    /* Font Awesome 上向き矢印 */
 }
 
 .sidebar-category.open .category-items {
-    display: block; /* Show items when category is open */
+    display: block;
+    /* Show items when category is open */
 }
 
 
@@ -554,44 +575,61 @@ body {
 /* --- Results Buttons Container --- 9 feb updated*/
 .results-buttons {
     display: flex;
-    justify-content: center; /* Center buttons horizontally */
-    gap: 20px; /* Spacing between buttons */
-    margin-top: 20px; /* Space above the buttons */
+    justify-content: center;
+    /* Center buttons horizontally */
+    gap: 20px;
+    /* Spacing between buttons */
+    margin-top: 20px;
+    /* Space above the buttons */
 }
 
 /* --- Results Buttons (Specific Styles) --- */
 .results-button {
-    background-color: #4CAF50; /* Green background, more vibrant */
+    background-color: #4CAF50;
+    /* Green background, more vibrant */
     color: white;
     border: none;
-    padding: 15px 30px; /* Slightly larger padding */
-    border-radius: 8px; /* More rounded corners */
-    font-size: 1.2rem; /* Slightly larger font size */
+    padding: 15px 30px;
+    /* Slightly larger padding */
+    border-radius: 8px;
+    /* More rounded corners */
+    font-size: 1.2rem;
+    /* Slightly larger font size */
     font-weight: bold;
     cursor: pointer;
-    text-align: center; /* Ensure text is centered */
-    text-decoration: none; /* Remove underlines if used as links */
-    display: inline-block; /* To respect padding and margin */
+    text-align: center;
+    /* Ensure text is centered */
+    text-decoration: none;
+    /* Remove underlines if used as links */
+    display: inline-block;
+    /* To respect padding and margin */
     transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    /* More pronounced shadow */
 }
 
 .results-button:hover {
-    background-color: #45a049; /* Darker green on hover */
-    transform: translateY(-2px); /* Slight lift effect on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+    background-color: #45a049;
+    /* Darker green on hover */
+    transform: translateY(-2px);
+    /* Slight lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    /* Increased shadow on hover */
 }
 
 .results-button:active {
-    transform: translateY(0); /* Press-down effect */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Reduced shadow on active */
+    transform: translateY(0);
+    /* Press-down effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    /* Reduced shadow on active */
 }
 
 /* --- Differentiated Colors for Button Types (Optional) --- */
 /* If you want to visually distinguish button purposes: */
 
 #retake-quiz-button.results-button {
-    background-color: #007bff; /* Blue for "Retake Quiz" - starting over */
+    background-color: #007bff;
+    /* Blue for "Retake Quiz" - starting over */
 }
 
 #retake-quiz-button.results-button:hover {
@@ -599,8 +637,10 @@ body {
 }
 
 #next-quiz-button.results-button {
-    background-color: #ffc107; /* Yellow/Amber for "Next Quiz" - progression */
-    color: #333; /* Use dark text for contrast on yellow */
+    background-color: #ffc107;
+    /* Yellow/Amber for "Next Quiz" - progression */
+    color: #333;
+    /* Use dark text for contrast on yellow */
 }
 
 #next-quiz-button.results-button:hover {
@@ -608,7 +648,8 @@ body {
 }
 
 #retake-wrong-button.results-button {
-    background-color: #dc3545; /* Red for "Retake Wrong Words" - focusing on errors */
+    background-color: #dc3545;
+    /* Red for "Retake Wrong Words" - focusing on errors */
 }
 
 #retake-wrong-button.results-button:hover {
@@ -618,18 +659,24 @@ body {
 
 /* --- Night Mode Styles for Results Buttons --- New */
 .night-mode .results-button {
-    background-color: #66bb6a; /* Lighter green in night mode */
-    color: #fff; /* Still white text */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Adjusted shadow for night mode */
+    background-color: #66bb6a;
+    /* Lighter green in night mode */
+    color: #fff;
+    /* Still white text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    /* Adjusted shadow for night mode */
 }
 
 .night-mode .results-button:hover {
-    background-color: #5cb85c; /* Slightly darker hover in night mode */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* Hover shadow for night mode */
+    background-color: #5cb85c;
+    /* Slightly darker hover in night mode */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    /* Hover shadow for night mode */
 }
 
 .night-mode #retake-quiz-button.results-button {
-    background-color: #5dade2; /* Lighter blue for "Retake Quiz" in night mode */
+    background-color: #5dade2;
+    /* Lighter blue for "Retake Quiz" in night mode */
 }
 
 .night-mode #retake-quiz-button.results-button:hover {
@@ -637,8 +684,10 @@ body {
 }
 
 .night-mode #next-quiz-button.results-button {
-    background-color: #ffda67; /* Lighter yellow/amber for "Next Quiz" in night mode */
-    color: #333; /* Keep dark text for contrast */
+    background-color: #ffda67;
+    /* Lighter yellow/amber for "Next Quiz" in night mode */
+    color: #333;
+    /* Keep dark text for contrast */
 }
 
 .night-mode #next-quiz-button.results-button:hover {
@@ -646,7 +695,8 @@ body {
 }
 
 .night-mode #retake-wrong-button.results-button {
-    background-color: #f05b68; /* Lighter red for "Retake Wrong Words" in night mode */
+    background-color: #f05b68;
+    /* Lighter red for "Retake Wrong Words" in night mode */
 }
 
 .night-mode #retake-wrong-button.results-button:hover {
@@ -654,73 +704,13 @@ body {
 }
 
 /* --- Styles for Very Small Mobile Screens (like iPhone SE) - Further Optimized --- */
-@media (max-width: 480px) { /* Targeting iPhone SE and similar */
-    /* --- General Buttons - Even Larger for SE --- */
-    button {
-        padding: 15px 30px; /* Further increase padding for better touch */
-        font-size: 1.3rem; /*  Even Larger font for readability */
-    }
 
-    /* --- Menu & Night Mode Toggles - SE Optimized --- */
-    .menu-toggle, .night-mode-toggle {
-        top: 6px; /* Position closer to the very top */
-        left: 6px;
-        right: auto;
-        padding: 11px 18px; /* Slightly adjust padding */
-        font-size: 1.5rem; /* Larger icons/text, more prominent */
-        border-radius: 8px; /* Slightly more rounded */
-    }
-    .night-mode-toggle {
-        left: auto;
-        right: 6px;
-    }
-
-    /* --- Quiz Option Buttons - SE Optimized --- */
-    .option {
-        padding: 18px 30px; /*  More Vertical and Horizontal Padding - key for touch */
-        margin: 14px 0; /*  Increased Vertical Margin for more spacing */
-        font-size: 1.3rem; /* Larger Text for Options */
-        border-radius: 10px; /* More rounded corners */
-    }
-
-    /* --- Next Question Button - SE Optimized --- */
-    .next-button {
-        padding: 18px 36px; /*  Increased Padding */
-        font-size: 1.4rem; /*  Larger Text */
-        border-radius: 10px; /* More rounded corners */
-    }
-
-    /* --- Results Buttons Container - SE Optimized --- */
-    .results-buttons {
-        gap: 10px; /*  Slightly tighter gap in vertical stack for very small screens */
-        margin-top: 20px; /*  Adjust top margin */
-    }
-
-    /* --- Results Buttons - SE Optimized --- */
-    .results-button {
-        padding: 18px 36px; /*  Significantly Increased Padding - very important for touch */
-        font-size: 1.4rem; /*  Ensure excellent readability */
-        width: 98%; /*  Utilize almost full screen width on tiny screens */
-        max-width: none; /*  No max-width limit for iPhone SE */
-        margin: 7px 0; /* Slightly increased vertical margin */
-        border-radius: 10px; /* More rounded corners */
-    }
-
-    /* --- Feedback Text - SE Optimized --- */
-    .feedback {
-        font-size: 1.3em; /* Slightly larger feedback text */
-        margin-top: 15px; /* Adjust margin */
-    }
-
-    .explanation, .example-sentence, .sentence-translation, .sentence-meaning {
-        font-size: 1em; /* Slightly larger explanation and sentence text */
-    }
-
-    /* --- Scoreboard - SE Optimized --- */
-    .scoreboard {
-        font-size: 1.2em; /* Slightly larger scoreboard text */
-        margin-top: 25px; /* Adjust margin */
-    }
+.home-button {
+    /* ... your existing home-button styles ... */
+    display: block;
+    /* Make it a block element */
+    margin: 0 auto;
+    /* Center horizontally */
 }
 
 .home-button {
@@ -740,28 +730,28 @@ body {
     overflow: hidden;
     transition: all 0.5s ease;
     box-shadow: 0 0 15px rgba(37, 117, 252, 0.5), 0 0 30px rgba(106, 17, 203, 0.5);
-    width: auto;
-  }
-  
-  .home-button a {
+    width: fit-content;
+}
+
+.home-button a {
     text-decoration: none;
     color: #fff;
-  }
-  
-  .home-button svg {
+}
+
+.home-button svg {
     width: 24px;
     height: 24px;
     margin-right: 10px;
     fill: currentColor;
-  }
-  
-  .home-button span {
+}
+
+.home-button span {
     position: relative;
     z-index: 2;
-  }
-  
-  /* Ripple Effect */
-  .home-button::after {
+}
+
+/* Ripple Effect */
+.home-button::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -773,29 +763,32 @@ body {
     transition: transform 0.5s ease, opacity 0.5s ease;
     opacity: 0;
     z-index: 1;
-  }
-  
-  .home-button:active::after {
+}
+
+.home-button:active::after {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
-  }
-  
-  /* Hover Gradient Animation */
-  .home-button:hover {
+}
+
+/* Hover Gradient Animation */
+.home-button:hover {
     background-position: 100% 100%;
     box-shadow: 0 0 25px rgba(37, 117, 252, 0.8), 0 0 50px rgba(106, 17, 203, 0.8);
-  }
-  
-  /* Neon Glow Animation */
-  @keyframes neon-glow {
-    0%, 100% {
-      box-shadow: 0 0 15px rgba(37, 117, 252, 0.5), 0 0 30px rgba(106, 17, 203, 0.5);
+}
+
+/* Neon Glow Animation */
+@keyframes neon-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 15px rgba(37, 117, 252, 0.5), 0 0 30px rgba(106, 17, 203, 0.5);
     }
+
     50% {
-      box-shadow: 0 0 25px rgba(37, 117, 252, 0.8), 0 0 50px rgba(106, 17, 203, 0.8);
+        box-shadow: 0 0 25px rgba(37, 117, 252, 0.8), 0 0 50px rgba(106, 17, 203, 0.8);
     }
-  }
-  
-  .home-button:hover {
+}
+
+.home-button:hover {
     animation: neon-glow 1.5s infinite alternate;
-  }
+}
