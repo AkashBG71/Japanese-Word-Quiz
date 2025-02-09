@@ -8,39 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
+
     <link rel="stylesheet" href="quizstyle.css">
 </head>
 
 <body>
     <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation menu"
         aria-expanded="false">☰</button>
-    <div class="sidebar hidden" id="sidebar">
-        <h2>Quiz Menu</h2>
-        <button onclick="switchQuiz('Quiz Ex English')" style="--button-delay: 0s;">Quiz Ex English</button>
-        <button onclick="switchQuiz('Quiz Ex Kanji')" style="--button-delay: 0.05s;">Quiz Ex Kanji</button>
-        <button onclick="switchQuiz('Quiz 1.1 English')" style="--button-delay: 0.1s;">Quiz 1.1 English</button>
-        <button onclick="switchQuiz('Quiz 1.2 Kanji')" style="--button-delay: 0.15s;">Quiz 1.2 Kanji</button>
-        <button onclick="switchQuiz('Quiz 2.1 English')" style="--button-delay: 0.2s;">Quiz 2.1 English</button>
-        <button onclick="switchQuiz('Quiz 2.2 Kanji')" style="--button-delay: 0.25s;">Quiz 2.2 Kanji</button>
-        <button onclick="switchQuiz('Quiz 3.1 English')" style="--button-delay: 0.3s;">Quiz 3.1 English</button>
-        <button onclick="switchQuiz('Quiz 3.2 Kanji')" style="--button-delay: 0.35s;">Quiz 3.2 Kanji</button>
-        <button onclick="switchQuiz('Quiz 4.1 English')" style="--button-delay: 0.4s;">Quiz 4.1 English</button>
-        <button onclick="switchQuiz('Quiz 4.2 Kanji')" style="--button-delay: 0.45s;">Quiz 4.2 Kanji</button>
-        <button onclick="switchQuiz('Quiz 5.1 English')" style="--button-delay: 0.5s;">Quiz 5.1 English</button>
-        <button onclick="switchQuiz('Quiz 5.2 Kanji')" style="--button-delay: 0.55s;">Quiz 5.2 Kanji</button>
-        <button onclick="switchQuiz('Quiz 6.1 English')" style="--button-delay: 0.6s;">Quiz 6.1 English</button>
-        <button onclick="switchQuiz('Quiz 6.2 Kanji')" style="--button-delay: 0.65s;">Quiz 6.2 Kanji</button>
-        <button onclick="switchQuiz('Quiz 7.1 English')" style="--button-delay: 0.7s;">Quiz 7.1 English</button>
-        <button onclick="switchQuiz('Quiz 7.2 Kanji')" style="--button-delay: 0.75s;">Quiz 7.2 Kanji</button>
-        <button onclick="switchQuiz('Quiz 8.1 English')" style="--button-delay: 0.8s;">Quiz 8.1 English</button>
-        <button onclick="switchQuiz('Quiz 8.2 Kanji')" style="--button-delay: 0.85s;">Quiz 8.2 Kanji</button>
-    </div>
-        <button id="night-mode-button" class="night-mode-toggle" onclick="toggleNightMode()">
+
+
+    <button id="night-mode-button" class="night-mode-toggle" onclick="toggleNightMode()">
         <i class="fas fa-moon" aria-hidden="true"></i> Night Mode
     </button>
 
-    <div class="quiz-container">
+    <div id="quiz-container" class="quiz-container">
         <h2 id="quiz-title" class="quiz-title"></h2>
         <div id="question" class="question"></div>
         <div id="options" class="options"></div>
@@ -52,6 +33,126 @@
             <button id="next-question-button" class="next-button" onclick="nextQuestion()">Next Question</button>
         </div>
     </div>
+
+    <div id="quiz-results-container" class="quiz-results-container hidden">
+        <h2>Quiz Results</h2>
+
+        <div id="results-lists" class="results-lists">
+            <div id="correct-answers-container" class="correct-answers-list">
+                <h3>Correct Answers</h3>
+                <ul id="correct-answers">
+                </ul>
+            </div>
+            <div id="wrong-answers-container" class="wrong-answers-list">
+                <h3>Wrong Answers</h3>
+                <ul id="wrong-answers">
+                </ul>
+            </div>
+        </div>
+
+        <div id="results-buttons" class="results-buttons"> <button id="retake-quiz-button" class="results-button">Retake
+                the Test</button>
+            <button id="next-quiz-button" class="results-button">Go to Next Quiz</button>
+            <button id="retake-wrong-button" class="results-button">Retake Quiz for Wrong Words</button>
+        </div>
+    </div>
+
+    <div class="sidebar hidden" id="sidebar">
+        <h2>Quiz Menu</h2>
+        <ul class="sidebar-nav">
+            <li class="sidebar-category">
+                <a href="#" class="category-header" id="dokkai-words-header"
+                    onclick="toggleCategory('dokkai-words-items')">Dokkai Words</a>
+                <ul class="category-items" id="dokkai-words-items">
+                    <li><button onclick="switchQuiz('Quiz Ex English')" style="--button-delay: 0s;"
+                            class="quiz-link">Quiz Ex English</button></li>
+                    <li><button onclick="switchQuiz('Quiz Ex Kanji')" style="--button-delay: 0.05s;"
+                            class="quiz-link">Quiz Ex Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 1.1 English')" style="--button-delay: 0.1s;"
+                            class="quiz-link">Quiz 1.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 1.1 Kanji')" style="--button-delay: 0.15s;"
+                            class="quiz-link">Quiz 1.1 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 1.2 English')" style="--button-delay: 0.2s;"
+                            class="quiz-link">Quiz 1.2 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 1.2 Kanji')" style="--button-delay: 0.25s;"
+                            class="quiz-link">Quiz 1.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 2.1 English')" style="--button-delay: 0.3s;"
+                            class="quiz-link">Quiz 2.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 2.1 Kanji')" style="--button-delay: 0.35s;"
+                            class="quiz-link">Quiz 2.1 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 2.2 English')" style="--button-delay: 0.4s;"
+                            class="quiz-link">Quiz 2.2 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 2.2 Kanji')" style="--button-delay: 0.45s;"
+                            class="quiz-link">Quiz 2.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 3.1 English')" style="--button-delay: 0.5s;"
+                            class="quiz-link">Quiz 3.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 3.1 Kanji')" style="--button-delay: 0.55s;"
+                            class="quiz-link">Quiz 3.1 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 3.2 English')" style="--button-delay: 0.6s;"
+                            class="quiz-link">Quiz 3.2 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 3.2 Kanji')" style="--button-delay: 0.65s;"
+                            class="quiz-link">Quiz 3.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 4.1 English')" style="--button-delay: 0.7s;"
+                            class="quiz-link">Quiz 4.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 4.1 Kanji')" style="--button-delay: 0.75s;"
+                            class="quiz-link">Quiz 4.1 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 4.2 English')" style="--button-delay: 0.8s;"
+                            class="quiz-link">Quiz 4.2 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 4.2 Kanji')" style="--button-delay: 0.85s;"
+                            class="quiz-link">Quiz 4.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 5.1 English')" style="--button-delay: 0.9s;"
+                            class="quiz-link">Quiz 5.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 5.1 Kanji')" style="--button-delay: 0.95s;"
+                            class="quiz-link">Quiz 5.1 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 5.2 English')" style="--button-delay: 1s;"
+                            class="quiz-link">Quiz 5.2 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 5.2 Kanji')" style="--button-delay: 1.05s;"
+                            class="quiz-link">Quiz 5.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 6.1 English')" style="--button-delay: 1.1s;"
+                            class="quiz-link">Quiz 6.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 6.1 Kanji')" style="--button-delay: 1.15s;"
+                            class="quiz-link">Quiz 6.1 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 6.2 English')" style="--button-delay: 1.2s;"
+                            class="quiz-link">Quiz 6.2 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 6.2 Kanji')" style="--button-delay: 1.25s;"
+                            class="quiz-link">Quiz 6.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 7.1 English')" style="--button-delay: 1.3s;"
+                            class="quiz-link">Quiz 7.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 7.2 Kanji')" style="--button-delay: 1.35s;"
+                            class="quiz-link">Quiz 7.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 8.1 English')" style="--button-delay: 1.4s;"
+                            class="quiz-link">Quiz 8.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 8.2 Kanji')" style="--button-delay: 1.45s;"
+                            class="quiz-link">Quiz 8.2 Kanji</button></li>
+                    <li><button onclick="switchQuiz('Quiz 9.1 English')" style="--button-delay: 1.45s;"
+                            class="quiz-link">Quiz 9.1 English</button></li>
+                    <li><button onclick="switchQuiz('Quiz 9.2 Kanji')" style="--button-delay: 1.45s;"
+                            class="quiz-link">Quiz 9.2 Kanji</button></li>
+
+                </ul>
+            </li>
+
+            <li class="sidebar-category">
+                <a href="#" class="category-header" id="level-1-100-header"
+                    onclick="toggleCategory('level-1-100-items')">Level 1 to 100</a>
+                <ul class="category-items" id="level-1-100-items">
+                    <li><button onclick="switchQuiz('Level 1')" style="--button-delay: 0s;" class="quiz-link">Level
+                            1</button></li>
+                </ul>
+
+        </ul>
+        </li>
+        </ul>
+    </div>
+    <button class="home-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" fill="currentColor" />
+            <a href="index.html"></a>
+        </svg>
+        <a href="index.html">Home</a>
+
+
+    </button>
     <script src="quizscript.js"></script>
 </body>
 

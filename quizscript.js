@@ -189,14 +189,76 @@ const quizWordSets = {
         "芸術家": ["げいじゅつか", "Artist", "Artist", "彼は世界的に有名な芸術家だ。", "kare wa sekai-teki ni yūmeina geijutsuka da.", "He is world-wide famous artist."],
         "バレリーナ": ["バレリーナ", "Ballerina", "Ballerina", "彼女は将来有望なバレリーナだ。", "kanojo wa shōrai yūbōna barerīna da.", "She is promising ballerina."],
         "配給": ["はいきゅう", "Provide", "Provide", "救援物資の配給が始まった。", "kyūen busshi no haikyū ga hajimatta.", "Provide of relief goods started."],
-    }
+    },
+
+    "Quiz 9.1": {
+        "待って":[ "まって", "Wait", "Wait", "次はちょっと待ってください彼を待っている。", "kare o matte iru.", "Waiting for him."],
+        "体制的": ["たいせいてき", "System-wide", "System-wide", "体制的な改革が必要だ。", "taiseiteki na kaikaku ga hitsuyō da.", "System-wide reform needed."],
+        "芸術家": ["げいじゅつか", "Artist", "Artist", "彼は世界的に有名な芸術家だ。", "kare wa sekai-teki ni yūmeina geijutsuka da.", "He is world-wide famous artist."],
+        "バレリーナ": ["バレリーナ", "Ballerina", "Ballerina", "彼女は将来有望なバレリーナだ。", "kanojo wa shōrai yūbōna barerīna da.", "She is promising ballerina."],
+        "配給": ["はいきゅう", "Provide", "Provide", "救援物資の配給が始まった。", "kyūen busshi no haikyū ga hajimatta.", "Provide of relief goods started."],
+    },
+    "Quiz 9.2": {
+        "待って":[ "まって", "Wait", "Wait", "次はちょっと待ってください彼を待っている。", "kare o matte iru.", "Waiting for him."],
+        "体制的": ["たいせいてき", "System-wide", "System-wide", "体制的な改革が必要だ。", "taiseiteki na kaikaku ga hitsuyō da.", "System-wide reform needed."],
+        "芸術家": ["げいじゅつか", "Artist", "Artist", "彼は世界的に有名な芸術家だ。", "kare wa sekai-teki ni yūmeina geijutsuka da.", "He is world-wide famous artist."],
+        "バレリーナ": ["バレリーナ", "Ballerina", "Ballerina", "彼女は将来有望なバレリーナだ。", "kanojo wa shōrai yūbōna barerīna da.", "She is promising ballerina."],
+        "配給": ["はいきゅう", "Provide", "Provide", "救援物資の配給が始まった。", "kyūen busshi no haikyū ga hajimatta.", "Provide of relief goods started."],
+    },
+    "Level 1 English": {
+        "待って":[ "まって", "Wait", "Wait", "次はちょっと待ってください彼を待っている。", "kare o matte iru.", "Waiting for him."],
+        "体制的": ["たいせいてき", "System-wide", "System-wide", "体制的な改革が必要だ。", "taiseiteki na kaikaku ga hitsuyō da.", "System-wide reform needed."],
+        "芸術家": ["げいじゅつか", "Artist", "Artist", "彼は世界的に有名な芸術家だ。", "kare wa sekai-teki ni yūmeina geijutsuka da.", "He is world-wide famous artist."],
+        "バレリーナ": ["バレリーナ", "Ballerina", "Ballerina", "彼女は将来有望なバレリーナだ。", "kanojo wa shōrai yūbōna barerīna da.", "She is promising ballerina."],
+        "配給": ["はいきゅう", "Provide", "Provide", "救援物資の配給が始まった。", "kyūen busshi no haikyū ga hajimatta.", "Provide of relief goods started."],
+    },
+
 
 };
 
 
 const quizzes = {};
 
-// Function to create quizzes from word sets
+const quizSequence = [
+    "Quiz Ex English",
+    "Quiz Ex Kanji",
+    "Quiz 1.1 English",
+    "Quiz 1.1 Kanji",
+    "Quiz 1.2 English",
+    "Quiz 1.2 Kanji",
+    "Quiz 2.1 English",
+    "Quiz 2.1 Kanji",
+    "Quiz 2.2 English",
+    "Quiz 2.2 Kanji",
+    "Quiz 3.1 English",
+    "Quiz 3.1 Kanji",
+    "Quiz 3.2 English",
+    "Quiz 3.2 Kanji",
+    "Quiz 4.1 English",
+    "Quiz 4.1 Kanji",
+    "Quiz 4.2 English",
+    "Quiz 4.2 Kanji",
+    "Quiz 5.1 English",
+    "Quiz 5.1 Kanji",
+    "Quiz 5.2 English",
+    "Quiz 5.2 Kanji",
+    "Quiz 6.1 English",
+    "Quiz 6.1 Kanji",
+    "Quiz 6.2 English",
+    "Quiz 6.2 Kanji",
+    "Quiz 7.1 English",
+    "Quiz 7.1 Kanji",
+    "Quiz 7.2 English",
+    "Quiz 7.2 Kanji",
+    "Quiz 8.1 English", // Added Quiz 8.2, assuming you want to include it. Add others if needed
+    "Quiz 8.2 Kanji",
+    "Quiz 9.1 English",
+    "Quiz 9.2 Kanji",
+    "Level 1",
+   
+];
+
+// Function to create quizzes from word sets (same as before)
 function createQuizzes() {
     for (const quizSetName in quizWordSets) {
         const wordSet = quizWordSets[quizSetName];
@@ -206,43 +268,36 @@ function createQuizzes() {
         const englishQuizQuestions = [];
         words.forEach(word => {
             const meanings = quizWordSets[quizSetName][word];
-            const correctEnglishMeaning = meanings[1]; // Use primary English meaning as correct option
-            // const secondaryEnglishMeaning = meanings[2] || meanings[0]; // No longer using secondary meaning as wrong option
+            const correctEnglishMeaning = meanings[1];
 
-            const options = [correctEnglishMeaning]; // Start with the correct English option
+            const options = [correctEnglishMeaning];
             let wrongOptions = [];
 
-            // 1. 	Fill wrong options with primary English meanings from *other* words, ensuring they are different from the correct one
             let otherWords = words.filter(w => w !== word);
             let otherWordIndex = 0;
             while (wrongOptions.length < 3 && otherWordIndex < otherWords.length) {
                 const otherWordMeanings = quizWordSets[quizSetName][otherWords[otherWordIndex]];
-                const otherPrimaryEnglishMeaning = otherWordMeanings[1]; // Get primary English meaning from another word
+                const otherPrimaryEnglishMeaning = otherWordMeanings[1];
 
                 if (otherPrimaryEnglishMeaning &&
-                    otherPrimaryEnglishMeaning !== correctEnglishMeaning && // Avoid duplicate correct meaning
-                    !options.includes(otherPrimaryEnglishMeaning) && // Avoid duplicate option
-                    !wrongOptions.includes(otherPrimaryEnglishMeaning)) { // Avoid duplicate wrong option
+                    otherPrimaryEnglishMeaning !== correctEnglishMeaning &&
+                    !options.includes(otherPrimaryEnglishMeaning) &&
+                    !wrongOptions.includes(otherPrimaryEnglishMeaning)) {
                     wrongOptions.push(otherPrimaryEnglishMeaning);
                 }
                 otherWordIndex++;
             }
 
-
-            // 2. Pad with "None of the above" if still less than 4 options
             while (options.length < 4) {
                 if (wrongOptions.length > 0) {
-                    options.push(wrongOptions.shift()); // Add a wrong option if available
+                    options.push(wrongOptions.shift());
                 } else {
-                    options.push("None of the above"); // Fallback if no more wrong options
+                    options.push("None of the above");
                 }
             }
 
-
-            // Shuffle options to randomize correct position
             shuffleArray(options);
-            const correctIndex = options.indexOf(correctEnglishMeaning); // Correct index after shuffling
-
+            const correctIndex = options.indexOf(correctEnglishMeaning);
 
             englishQuizQuestions.push({
                 question: `What is '${word}' in English?`,
@@ -251,52 +306,49 @@ function createQuizzes() {
                 explanation: `'${word}' (${meanings[0]}) means '${correctEnglishMeaning}' in English.`,
                 exampleSentence: meanings[3] || null,
                 sentenceTranslation: meanings[4] || null,
-                sentenceMeaning: meanings[5] || null
+                sentenceMeaning: meanings[5] || null,
+                japaneseWord: word
             });
         });
-        quizzes[`${quizSetName} English`] = englishQuizQuestions.slice(0, 10); // Take only first 10
+        quizzes[`${quizSetName} English`] = englishQuizQuestions.slice(0, 10);
 
-
-        // Kanji Quiz - Modified option generation
+        // Kanji Quiz
         const kanjiQuizQuestions = [];
         words.forEach(word => {
             const meanings = quizWordSets[quizSetName][word];
 
-            // Get other words to use as incorrect options, excluding the correct word itself
             const otherWordsForOptions = words.filter(w => w !== word);
             let incorrectOptions = [];
-            let optionIndices = []; // To track indices already used to ensure uniqueness
+            let optionIndices = [];
 
-            // Try to get 3 unique incorrect options from other words in the set
             while (incorrectOptions.length < 3 && otherWordsForOptions.length > 0) {
                 let randomIndex = Math.floor(Math.random() * otherWordsForOptions.length);
-                if (!optionIndices.includes(randomIndex)) { // Check if this index was already used
+                if (!optionIndices.includes(randomIndex)) {
                     incorrectOptions.push(otherWordsForOptions[randomIndex]);
-                    optionIndices.push(randomIndex); // Record the used index
+                    optionIndices.push(randomIndex);
                 }
             }
 
-            const options = [word, ...incorrectOptions]; // Correct word + unique incorrect options
-            shuffleArray(options); // Shuffle options to randomize correct answer position
-            const correctIndex = options.indexOf(word); // Find the index of the correct word after shuffling
-
+            const options = [word, ...incorrectOptions];
+            shuffleArray(options);
+            const correctIndex = options.indexOf(word);
 
             kanjiQuizQuestions.push({
                 question: `Which Kanji represents '${meanings[1] || meanings[2] || meanings[0]}' (${meanings[0]})?`,
-                options: options, // Use the options array with unique incorrect options
-                correct: correctIndex, // Use the correct index calculated after shuffling
-                explanation: `The Kanji '${word}'  represents '${meanings[1] || meanings[2] || meanings[0]}' (${meanings[0]}).`,
+                options: options,
+                correct: correctIndex,
+                explanation: `The Kanji '${word}'  represents '${meanings[1] || meanings[2] || meanings[0]}' (${meanings[0]}).`,
                 exampleSentence: meanings[3] || null,
                 sentenceTranslation: meanings[4] || null,
-                sentenceMeaning: meanings[5] || null
+                sentenceMeaning: meanings[5] || null,
+                japaneseWord: word
             });
         });
-        quizzes[`${quizSetName} Kanji`] = kanjiQuizQuestions.slice(0, 10); // Take first 10
-
+        quizzes[`${quizSetName} Kanji`] = kanjiQuizQuestions.slice(0, 10);
     }
 }
 
-// Utility function to shuffle array (Fisher-Yates Shuffle)
+// Utility function to shuffle array (Fisher-Yates Shuffle) (same as before)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -304,17 +356,18 @@ function shuffleArray(array) {
     }
 }
 
+createQuizzes();
 
-createQuizzes(); // Call the function to generate quizzes
-
-
-let currentQuiz = "Quiz Ex English"; // Default quiz
+let currentQuiz = "Quiz Ex English";
 let currentQuestionIndex = 0;
 let correctAnswers = 0;
 let wrongAnswers = 0;
 let nightMode = false;
 let optionsElements = [];
 let nextButtonContainer = document.getElementById('next-button-container');
+let correctAnswersList = [];
+let wrongAnswersList = [];
+let currentQuizQuestions = []; // To hold the questions for the current quiz
 
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -326,13 +379,12 @@ function toggleSidebar() {
     menuToggle.setAttribute('aria-expanded', !expanded);
 }
 
-
 function switchQuiz(quiz) {
     currentQuiz = quiz;
     document.getElementById('sidebar').classList.remove('show');
     document.getElementById('sidebar').classList.add('hidden');
     document.querySelector('.menu-toggle').setAttribute('aria-expanded', 'false');
-    restartQuiz();
+    startQuiz(); // Ensure startQuiz is called to reset and load questions
 }
 
 function loadQuestion() {
@@ -348,16 +400,13 @@ function loadQuestion() {
     optionsContainer.style.opacity = 0;
     nextButtonContainer.classList.add('hidden');
 
-
     optionsElements = [];
     optionsContainer.innerHTML = '';
     feedbackContainer.innerHTML = '';
     quizTitleElement.innerText = currentQuiz;
 
-
-    const q = quizzes[currentQuiz][currentQuestionIndex];
+    const q = currentQuizQuestions[currentQuestionIndex]; // Use currentQuizQuestions
     questionElement.innerText = q.question;
-
 
     q.options.forEach((opt, i) => {
         const div = document.createElement('div');
@@ -368,23 +417,20 @@ function loadQuestion() {
         optionsElements.push(div);
         div.style.opacity = 0;
         div.style.transform = 'scale(0.95)';
-
     });
 
     setTimeout(() => {
-        quizTitleElement.style.animation = 'fadeInSlideDown 0.3s forwards'; /* Faster animation duration */
-        questionElement.style.animation = 'fadeInSlideDown 0.3s forwards 0.2s'; /* Faster animation duration */
+        quizTitleElement.style.animation = 'fadeInSlideDown 0.3s forwards';
+        questionElement.style.animation = 'fadeInSlideDown 0.3s forwards 0.2s';
         optionsContainer.style.opacity = 1;
         optionsElements.forEach((option, index) => {
-            option.style.animation = `fadeInScaleUp 0.3s forwards ${0.4 + (index * 0.1)}s`; /* Faster animation duration */
+            option.style.animation = `fadeInScaleUp 0.3s forwards ${0.4 + (index * 0.1)}s`;
         });
     }, 10);
-
 }
 
-
 function checkAnswer(selectedIndex) {
-    const q = quizzes[currentQuiz][currentQuestionIndex];
+    const q = currentQuizQuestions[currentQuestionIndex]; // Use currentQuizQuestions
     const options = document.querySelectorAll('.option');
     const selectedOption = options[selectedIndex];
 
@@ -393,7 +439,7 @@ function checkAnswer(selectedIndex) {
         correctAnswers++;
         document.getElementById('correct-count').innerText = correctAnswers;
         showFeedback(true, q.explanation, q.exampleSentence, q.sentenceTranslation, q.sentenceMeaning);
-
+        correctAnswersList.push(q);
 
     } else {
         selectedOption.classList.add('wrong');
@@ -401,6 +447,7 @@ function checkAnswer(selectedIndex) {
         document.getElementById('wrong-count').innerText = wrongAnswers;
         options[q.correct].classList.add('correct');
         showFeedback(false, q.explanation, q.exampleSentence, q.sentenceTranslation, q.sentenceMeaning);
+        wrongAnswersList.push(q);
     }
 
     options.forEach(option => option.classList.add('disabled'));
@@ -414,7 +461,6 @@ function showFeedback(isCorrect, explanationText, exampleSentence, sentenceTrans
     const feedbackDiv = document.createElement('div');
     feedbackDiv.classList.add('feedback');
 
-
     if (isCorrect) {
         feedbackDiv.classList.add('correct-feedback');
         feedbackDiv.innerHTML = '<i class="fas fa-check-circle"></i> Correct!';
@@ -425,7 +471,7 @@ function showFeedback(isCorrect, explanationText, exampleSentence, sentenceTrans
     feedbackContainer.appendChild(feedbackDiv);
     feedbackDiv.style.opacity = 0;
     feedbackDiv.style.transform = 'translateY(15px)';
-    feedbackDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.2s'; /* Faster animation duration */
+    feedbackDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.2s';
 
     if (explanationText) {
         const explanationDiv = document.createElement('div');
@@ -434,46 +480,45 @@ function showFeedback(isCorrect, explanationText, exampleSentence, sentenceTrans
         feedbackContainer.appendChild(explanationDiv);
         explanationDiv.style.opacity = 0;
         explanationDiv.style.transform = 'translateY(15px)';
-        explanationDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.4s'; /* Faster animation duration */
+        explanationDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.4s';
     }
 
     if (exampleSentence) {
-        const exampleDiv = document.createElement('div');
-        exampleDiv.classList.add('example-sentence');
-        exampleDiv.innerText = exampleSentence;
-        feedbackContainer.appendChild(exampleDiv);
-        exampleDiv.style.opacity = 0;
-        exampleDiv.style.transform = 'translateY(15px)';
-        exampleDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.6s'; /* Faster animation duration */
+        const exampleSentenceDiv = document.createElement('div');
+        exampleSentenceDiv.classList.add('example-sentence');
+        exampleSentenceDiv.innerText = exampleSentence;
+        feedbackContainer.appendChild(exampleSentenceDiv);
+        exampleSentenceDiv.style.opacity = 0;
+        exampleSentenceDiv.style.transform = 'translateY(15px)';
+        exampleSentenceDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.6s';
         if (nightMode) {
-            exampleDiv.classList.add('night-mode-sentence'); // Apply night mode class
+            exampleSentenceDiv.classList.add('night-mode-sentence');
         }
     }
 
     if (sentenceTranslation) {
-        const translationDiv = document.createElement('div');
-        translationDiv.classList.add('sentence-translation');
-        translationDiv.innerText = sentenceTranslation;
-        feedbackContainer.appendChild(translationDiv);
-        translationDiv.style.opacity = 0;
-        translationDiv.style.transform = 'translateY(15px)';
-        translationDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.8s'; /* Faster animation duration */
+        const sentenceTranslationDiv = document.createElement('div');
+        sentenceTranslationDiv.classList.add('sentence-translation');
+        sentenceTranslationDiv.innerText = sentenceTranslation;
+        feedbackContainer.appendChild(sentenceTranslationDiv);
+        sentenceTranslationDiv.style.opacity = 0;
+        sentenceTranslationDiv.style.transform = 'translateY(15px)';
+        sentenceTranslationDiv.style.animation = 'fadeInSlideUp 0.3s forwards 0.8s';
     }
-    if (sentenceMeaning) { // Add sentence meaning (English translation)
-        const meaningDiv = document.createElement('div');
-        meaningDiv.classList.add('sentence-meaning');
-        meaningDiv.innerText = `Translation: ${sentenceMeaning}`;
-        feedbackContainer.appendChild(meaningDiv);
-        meaningDiv.style.opacity = 0;
-        meaningDiv.style.transform = 'translateY(15px)';
-        meaningDiv.style.animation = 'fadeInSlideUp 1s forwards 1s';
+    if (sentenceMeaning) {
+        const sentenceMeaningDiv = document.createElement('div');
+        sentenceMeaningDiv.classList.add('sentence-meaning');
+        sentenceMeaningDiv.innerText = `Translation: ${sentenceMeaning}`;
+        feedbackContainer.appendChild(sentenceMeaningDiv);
+        sentenceMeaningDiv.style.opacity = 0;
+        sentenceMeaningDiv.style.transform = 'translateY(15px)';
+        sentenceMeaningDiv.style.animation = 'fadeInSlideUp 1s forwards 1s';
     }
 }
 
-
 function nextQuestion() {
     currentQuestionIndex++;
-    if (currentQuestionIndex < quizzes[currentQuiz].length) {
+    if (currentQuestionIndex < currentQuizQuestions.length) { // Use currentQuizQuestions.length
         loadQuestion();
     } else {
         endQuiz();
@@ -484,53 +529,171 @@ function restartQuiz() {
     currentQuestionIndex = 0;
     correctAnswers = 0;
     wrongAnswers = 0;
+    correctAnswersList = [];
+    wrongAnswersList = [];
     document.getElementById('correct-count').innerText = correctAnswers;
     document.getElementById('wrong-count').innerText = wrongAnswers;
-    document.getElementById('feedback-container').innerHTML = '';
-    nextButtonContainer.classList.add('hidden');
+    hideFeedback();
+    hideResultsContainer();
+    currentQuizQuestions = quizzes[currentQuiz]; // Reset to full quiz questions
     loadQuestion();
 }
 
 
 function endQuiz() {
-    const quizContainer = document.getElementById('quiz-container');
-    const resultsContainer = document.getElementById('results-container');
-    const scoreElement = document.getElementById('score');
-    quizContainer.classList.add('hidden');
-    resultsContainer.classList.remove('hidden');
-
-    scoreElement.innerText = `${correctAnswers} / ${quizzes[currentQuiz].length}`;
+    document.getElementById('quiz-container').classList.add('hidden');
+    showQuizResults();
 }
+
+
+function showQuizResults() {
+    document.getElementById('quiz-container').classList.add('hidden');
+    const resultsContainer = document.getElementById('quiz-results-container');
+    resultsContainer.classList.remove('hidden');
+    resultsContainer.style.opacity = 0;
+    resultsContainer.style.transform = 'translateY(30px)';
+    resultsContainer.style.animation = 'fadeInSlideUp 0.5s forwards';
+
+    populateAnswerLists();
+    setupResultButtons();
+}
+
+
+function hideResultsContainer() {
+    const resultsContainer = document.getElementById('quiz-results-container');
+    if (resultsContainer) {
+        resultsContainer.classList.add('hidden');
+    }
+    document.getElementById('quiz-container').classList.remove('hidden');
+}
+
+
+function populateAnswerLists() {
+    const correctListUl = document.getElementById('correct-answers');
+    const wrongListUl = document.getElementById('wrong-answers');
+
+    correctListUl.innerHTML = '';
+    wrongListUl.innerHTML = '';
+
+    correctAnswersList.forEach(questionObj => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<span class="japanese-word">${questionObj.japaneseWord}</span> - ${questionObj.question}`;
+        correctListUl.appendChild(listItem);
+    });
+
+    wrongAnswersList.forEach(questionObj => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<span class="japanese-word">${questionObj.japaneseWord}</span> - ${questionObj.question}`;
+        wrongListUl.appendChild(listItem);
+    });
+}
+
+
+function createWrongWordsQuiz(wrongWords) {
+    return wrongWords.map(question => ({ ...question })); // Creates a new array with the wrong questions
+}
+
+
+function startQuizWithWrongWords(wrongWordsQuiz) {
+    if (wrongWordsQuiz && wrongWordsQuiz.length > 0) {
+        currentQuizQuestions = wrongWordsQuiz; // Set current questions to wrong words only
+        currentQuestionIndex = 0;
+        correctAnswers = 0;
+        wrongAnswers = 0;
+        correctAnswersList = [];
+        wrongAnswersList = [];
+        document.getElementById('correct-count').innerText = correctAnswers;
+        document.getElementById('wrong-count').innerText = wrongAnswers;
+        hideResultsContainer();
+        hideFeedback();
+        loadQuestion();
+    } else {
+        alert("No wrong answers available to retake!");
+    }
+}
+
+
+function setupResultButtons() {
+    const retakeQuizButton = document.getElementById('retake-quiz-button');
+    const nextQuizButton = document.getElementById('next-quiz-button');
+    const retakeWrongButton = document.getElementById('retake-wrong-button');
+
+    retakeQuizButton.onclick = () => {
+        restartQuiz();
+        hideResultsContainer();
+    };
+
+    nextQuizButton.onclick = () => {
+        const currentQuizIndexInSequence = quizSequence.indexOf(currentQuiz);
+        if (currentQuizIndexInSequence < quizSequence.length - 1) {
+            // There is a next quiz in the sequence
+            const nextQuizName = quizSequence[currentQuizIndexInSequence + 1];
+            switchQuiz(nextQuizName); // Switch to the next quiz
+            startQuiz(); // Start the next quiz
+        } else {
+            // No next quiz (we are at the end of the sequence)
+            alert("You have completed the last quiz in this series!");
+            // Optionally, you could loop back to the first quiz, or disable the button, etc.
+             // For example, to loop back to the first quiz:
+             // switchQuiz(quizSequence[0]);
+             // startQuiz();
+        }
+    };
+
+    retakeWrongButton.onclick = () => {
+        if (wrongAnswersList.length > 0) {
+            const wrongQuiz = createWrongWordsQuiz(wrongAnswersList);
+            startQuizWithWrongWords(wrongQuiz);
+        } else {
+            alert("No wrong answers to retake!");
+        }
+    };
+}
+
 
 function startQuiz() {
     const quizContainer = document.getElementById('quiz-container');
-    const resultsContainer = document.getElementById('results-container');
+    hideResultsContainer();
     quizContainer.classList.remove('hidden');
-    resultsContainer.classList.add('hidden');
     restartQuiz();
 }
+
 
 function toggleNightMode() {
     nightMode = !nightMode;
     document.body.classList.toggle('night-mode', nightMode);
     const options = document.querySelectorAll('.option');
     options.forEach(option => option.classList.toggle('night-mode', nightMode));
-    const exampleSentence = document.querySelectorAll('.example-sentence');
-    exampleSentence.forEach(sentence => sentence.classList.toggle('night-mode-sentence', nightMode));
-
+    const exampleSentences = document.querySelectorAll('.example-sentence');
+    exampleSentences.forEach(sentence => sentence.classList.toggle('night-mode-sentence', nightMode));
 
     const nightModeButton = document.getElementById('night-mode-button');
     if (nightMode) {
         nightModeButton.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        localStorage.setItem('nightMode', 'enabled');
     } else {
         nightModeButton.innerHTML = '<i class="fas fa-moon"></i> Night Mode';
+        localStorage.setItem('nightMode', 'disabled');
     }
+}
+
+function checkNightModePreference() {
+    if (localStorage.getItem('nightMode') === 'enabled') {
+        toggleNightMode();
+    }
+}
+
+
+function hideFeedback() {
+    document.getElementById('feedback-container').innerHTML = '';
+    nextButtonContainer.classList.add('hidden');
 }
 
 
 // Initial setup
 document.addEventListener('DOMContentLoaded', () => {
-    loadQuestion();
+    checkNightModePreference();
+    startQuiz(); // Call startQuiz to initialize the quiz correctly on page load
     document.querySelectorAll('.quiz-link').forEach(link => {
         link.addEventListener('click', (event) => {
             switchQuiz(event.target.innerText);
@@ -538,3 +701,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+function toggleCategory(categoryId) {
+    const categoryItems = document.getElementById(categoryId);
+    const categoryHeader = document.getElementById('dokkai-words-header');
+    const sidebarCategory = categoryHeader.closest('.sidebar-category');
+
+    if (categoryItems.style.display === 'none' || categoryItems.style.display === '') {
+        categoryItems.style.display = 'block';
+        sidebarCategory.classList.add('open');
+    } else {
+        categoryItems.style.display = 'none';
+        sidebarCategory.classList.remove('open');
+    }
+}
+
+// function toggleCategory(categoryId) {
+//     const categoryItems = document.getElementById(categoryId);
+//     const categoryHeader = document.getElementById('level-1-100-header');
+//     const sidebarCategory = categoryHeader.closest('.sidebar-category');
+
+//     if (categoryItems.style.display === 'none' || categoryItems.style.display === '') {
+//         categoryItems.style.display = 'block';
+//         sidebarCategory.classList.add('open');
+//     } else {
+//         categoryItems.style.display = 'none';
+//         sidebarCategory.classList.remove('open');
+//     }
+// }
