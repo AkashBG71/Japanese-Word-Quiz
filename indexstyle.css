@@ -9,16 +9,16 @@ body {
     align-items: center;
     transition: background-color 0.3s, color 0.3s;
     /* Smooth transition for theme changes */
-}
-
-body.light-mode {
+  }
+  
+  body.light-mode {
     background-color: #f0f0f0;
     color: black;
-}
-
-/* Sidebar Styles */
-#sidebar,
-#right-sidebar {
+  }
+  
+  /* Sidebar Styles */
+  #sidebar,
+  #right-sidebar {
     width: 280px;
     /* Slightly reduced sidebar width */
     padding: 20px;
@@ -31,95 +31,95 @@ body.light-mode {
     transition: transform 0.3s ease-in-out;
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
     /* Added shadow for depth */
-}
-
-#sidebar {
+  }
+  
+  #sidebar {
     left: -300px;
     /* Adjusted for new width and fully hidden */
     background-color: #2a2a2a;
     /* Dark sidebar background */
-}
-
-#right-sidebar {
+  }
+  
+  #right-sidebar {
     right: -300px;
     /* Adjusted for new width and fully hidden */
     background-color: #2a2a2a;
     /* Dark sidebar background */
-}
-
-body.light-mode #sidebar,
-body.light-mode #right-sidebar {
+  }
+  
+  body.light-mode #sidebar,
+  body.light-mode #right-sidebar {
     background-color: #ffffff;
     /* Light sidebar background */
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
     /* Shadow for light mode */
-}
-
-#sidebar.active {
+  }
+  
+  #sidebar.active {
     transform: translateX(300px);
-}
-
-#right-sidebar.active {
+  }
+  
+  #right-sidebar.active {
     transform: translateX(-300px);
-}
-
-#sidebar h3,
-#right-sidebar h3 {
+  }
+  
+  #sidebar h3,
+  #right-sidebar h3 {
     color: #eee;
     /* Light sidebar header text color */
     margin-top: 0;
     margin-bottom: 15px;
     border-bottom: 2px solid #444;
     padding-bottom: 10px;
-}
-
-body.light-mode #sidebar h3,
-body.light-mode #right-sidebar h3 {
+  }
+  
+  body.light-mode #sidebar h3,
+  body.light-mode #right-sidebar h3 {
     color: #333;
     /* Dark sidebar header text for light mode */
     border-bottom-color: #ccc;
-}
-
-#sidebar ul,
-#right-sidebar ul {
+  }
+  
+  #sidebar ul,
+  #right-sidebar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-}
-
-#sidebar li,
-#right-sidebar li {
+  }
+  
+  #sidebar li,
+  #right-sidebar li {
     padding: 10px 15px;
     border-bottom: 1px solid #444;
     cursor: pointer;
     transition: background-color 0.2s ease;
     color: #ddd;
     /* Light sidebar list text color */
-}
-
-body.light-mode #sidebar li,
-body.light-mode #right-sidebar li {
+  }
+  
+  body.light-mode #sidebar li,
+  body.light-mode #right-sidebar li {
     color: #555;
     /* Dark sidebar list text color for light mode */
     border-bottom-color: #eee;
-}
-
-
-#sidebar li:hover,
-#right-sidebar li:hover {
+  }
+  
+  
+  #sidebar li:hover,
+  #right-sidebar li:hover {
     background-color: #333;
-}
-
-body.light-mode #sidebar li:hover,
-body.light-mode #right-sidebar li:hover {
+  }
+  
+  body.light-mode #sidebar li:hover,
+  body.light-mode #right-sidebar li:hover {
     background-color: #f5f5f5;
-}
-
-
-/* Toggle Button Styles */
-#toggle-sidebar,
-#toggle-right-sidebar,
-#night-mode-toggle {
+  }
+  
+  
+  /* Toggle Button Styles */
+  #toggle-sidebar,
+  #toggle-right-sidebar,
+  #night-mode-toggle {
     position: fixed;
     top: 65px;
     /* Moved down to avoid overlap */
@@ -132,24 +132,25 @@ body.light-mode #right-sidebar li:hover {
     z-index: 1100;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-}
-
-#toggle-sidebar {
+  }
+  
+  
+  #toggle-sidebar {
     left: 10px;
-}
-
-#toggle-right-sidebar {
+  }
+  
+  #toggle-right-sidebar {
     right: 10px;
-}
-
-/* Hide toggle buttons when sidebars are active */
-#sidebar.active+#toggle-sidebar,
-#right-sidebar.active+#toggle-right-sidebar {
+  }
+  
+  /* Hide toggle buttons when sidebars are active */
+  #sidebar.active+#toggle-sidebar,
+  #right-sidebar.active+#toggle-right-sidebar {
     display: none;
-}
-
-
-#night-mode-toggle {
+  }
+  
+  
+  #night-mode-toggle {
     position: relative;
     /* Changed to relative to footer */
     bottom: auto;
@@ -165,17 +166,17 @@ body.light-mode #right-sidebar li:hover {
     white-space: nowrap;
     margin-bottom: 10px;
     /* Added margin to separate from creator text */
-}
-
-
-#toggle-sidebar:hover,
-#toggle-right-sidebar:hover,
-#night-mode-toggle:hover {
+  }
+  
+  
+  #toggle-sidebar:hover,
+  #toggle-right-sidebar:hover,
+  #night-mode-toggle:hover {
     background-color: #555;
-}
-
-/* Quiz Container Styles */
-#quiz-container {
+  }
+  
+  /* Quiz Container Styles */
+  #quiz-container {
     margin-top: 100px;
     /* Increased margin to avoid overlap with toggles */
     max-width: 600px;
@@ -193,42 +194,42 @@ body.light-mode #right-sidebar li:hover {
     /* Slightly smaller initial scale */
     animation: bloom 0.6s forwards;
     /* Slightly longer animation */
-}
-
-@keyframes bloom {
+  }
+  
+  @keyframes bloom {
     from {
-        transform: scale(0.9);
-        opacity: 0.7;
+      transform: scale(0.9);
+      opacity: 0.7;
     }
-
+  
     to {
-        transform: scale(1);
-        opacity: 1;
+      transform: scale(1);
+      opacity: 1;
     }
-}
-
-#quiz-container h2 {
+  }
+  
+  #quiz-container h2 {
     margin-top: 0;
     margin-bottom: 20px;
     font-size: 2em;
     /* Larger heading */
     color: #fff;
-}
-
-#quiz-container h3#question {
+  }
+  
+  #quiz-container h3#question {
     font-size: 1.4em;
     /* Larger question text */
     color: #eee;
     margin-bottom: 30px;
-}
-
-body.light-mode #quiz-container h2,
-body.light-mode #quiz-container h3#question {
+  }
+  
+  body.light-mode #quiz-container h2,
+  body.light-mode #quiz-container h3#question {
     color: #333;
-}
-
-
-input[type="text"] {
+  }
+  
+  
+  input[type="text"] {
     padding: 12px 15px;
     /* Adjusted input padding */
     margin: 15px 10px;
@@ -238,28 +239,28 @@ input[type="text"] {
     background-color: #333;
     color: white;
     transition: background-color 0.3s;
-}
-
-body.light-mode input[type="text"] {
+  }
+  
+  body.light-mode input[type="text"] {
     background-color: #fff;
     color: black;
     border-color: #ccc;
-}
-
-input[type="text"]:focus {
+  }
+  
+  input[type="text"]:focus {
     outline: none;
     border-color: #777;
     background-color: #444;
     /* Slightly darker on focus in dark mode */
-}
-
-body.light-mode input[type="text"]:focus {
+  }
+  
+  body.light-mode input[type="text"]:focus {
     background-color: #f8f8f8;
     border-color: #bbb;
-}
-
-
-button {
+  }
+  
+  
+  button {
     padding: 12px 20px;
     /* Adjusted button padding */
     margin: 10px;
@@ -271,23 +272,23 @@ button {
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 1em;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: #777;
-}
-
-#quiz-container p#result {
+  }
+  
+  #quiz-container p#result {
     min-height: 24px;
     /* Ensure space for result text */
     margin-top: 20px;
     font-weight: bold;
     color: #aaf;
     /* Result text color */
-}
-
-/* Footer Styles */
-footer {
+  }
+  
+  /* Footer Styles */
+  footer {
     margin-top: 30px;
     text-align: center;
     padding: 40px 0 20px 0;
@@ -302,116 +303,117 @@ footer {
     /* Stack items vertically */
     align-items: center;
     /* Center items horizontally */
-}
-
-body.light-mode footer {
+  }
+  
+  body.light-mode footer {
     color: #777;
     /* Darker footer text for light mode */
-}
-
-/* Mistake Item Styles */
-.mistake-item {
+  }
+  
+  /* Mistake Item Styles */
+  .mistake-item {
     padding: 10px 15px;
     border-bottom: 1px dashed #555;
     /* Dashed line for mistakes */
     cursor: pointer;
     color: #ddd;
-}
-
-body.light-mode .mistake-item {
+  }
+  
+  body.light-mode .mistake-item {
     color: #777;
     border-bottom-color: #eee;
-}
-
-
-.mistake-item:last-child {
+  }
+  
+  
+  .mistake-item:last-child {
     border-bottom: none;
     /* Remove border from last mistake item */
-}
-
-.mistake-item:hover {
+  }
+  
+  .mistake-item:hover {
     background-color: #3a3a3a;
-}
-
-body.light-mode .mistake-item:hover {
+  }
+  
+  body.light-mode .mistake-item:hover {
     background-color: #f8f8f8;
-}
-
-
-.mistake-answer {
+  }
+  
+  
+  .mistake-answer {
     display: none;
     color: #aaa;
     /* Lighter answer text in mistakes */
     font-style: italic;
-}
-
-body.light-mode .mistake-answer {
+  }
+  
+  body.light-mode .mistake-answer {
     color: #999;
-}
-
-
-/* Media Queries for Responsiveness (Optional) */
-@media (max-width: 768px) {
-
+  }
+  
+  
+  /* Media Queries for Responsiveness (Optional) */
+  @media (max-width: 768px) {
+  
     #sidebar,
     #right-sidebar {
-        width: 250px;
-        padding: 15px;
+      width: 250px;
+      padding: 15px;
     }
-
+  
     #sidebar.active {
-        transform: translateX(250px);
+      transform: translateX(250px);
     }
-
+  
     #right-sidebar.active {
-        transform: translateX(-250px);
+      transform: translateX(-250px);
     }
-
+  
     #toggle-sidebar,
     #toggle-right-sidebar {
-        top: 50px;
-        /* Adjusted top for mobile */
+      top: 50px;
+      /* Adjusted top for mobile */
     }
-
+  
     #quiz-container {
-        margin-top: 90px;
-        /* Adjusted margin-top for mobile */
-        padding: 40px;
-        max-width: 95%;
-        /* Quiz container takes more width on smaller screens */
+      margin-top: 90px;
+      /* Adjusted margin-top for mobile */
+      padding: 40px;
+      max-width: 95%;
+      /* Quiz container takes more width on smaller screens */
     }
-
+  
     #quiz-container h2 {
-        font-size: 1.7em;
+      font-size: 1.7em;
     }
-
+  
     #quiz-container h3#question {
-        font-size: 1.2em;
+      font-size: 1.2em;
     }
-
+  
     #night-mode-toggle {
-        bottom: 0px;
-        left: 50%;
+      bottom: 0px;
+      left: 50%;
+      transform: translateX(-50%); /* Horizontally center the button */
     }
-}
-
-.correct-answer-text {
+  }
+  
+  .correct-answer-text {
     color: lightgreen;
-}
-
-.incorrect-answer-text {
+  }
+  
+  .incorrect-answer-text {
     color: lightcoral;
-}
-
-.show-answer-text {
+  }
+  
+  .show-answer-text {
     color: #007bff;
     /* Example color for "Show Answer" text */
-}
-
-.correct-answer-input {
+  }
+  
+  .correct-answer-input {
     border-color: lightgreen;
-}
-
-.incorrect-answer-input {
+  }
+  
+  .incorrect-answer-input {
     border-color: lightcoral;
-}
+  }
